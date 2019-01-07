@@ -15,6 +15,8 @@ Nå skal telleren altså kunne restartes (uavhengig av om den er ferdig eller ik
 
 Det enkleste er å kopiere koden fra tidligere, og så endre og legge til kode slik at logikken blir riktig.
 
+### Klassedeklarasjonen
+
 Siden klassenavnet nå er **Counter2** (og det *full navnet* til klassen er **stateandbehavior.counter.Counter2**), så må klasse-deklarasjonen endres:
 
 ```java
@@ -27,6 +29,8 @@ class Counter2 {
 
 Dette går av seg selv hvis du bruker kopier og lim-funksjonen av Counter1.java-fila i Eclipse.
 
+### Variabeldeklarasjoner
+
 Vi må legge til en **start**-variabel, siden vi jo må huske den opprinnelige start-verdien:
 
 ```java
@@ -36,6 +40,8 @@ int start;
 int end;
 int counter;
 ```
+
+### Konstruktør(er) og metoder
 
 Da må konstruktøren endres og metoden for å restarte legges til:
 
@@ -55,6 +61,14 @@ void restart() {
 
 Her har vi valgt å kalle **restart**-metoden i konstruktøren, siden det som gjenstår etter initialisering av **start**- og **end**-variablene nødvendigvis tilsvarer å (re)starte telleren. 
 
+### Objektdiagram
+
+Objektdiagrammet for et objekt opprettet med **new Counter2(2, 5)** vil det ut som dette:
+
+![Objektdiagram for objekt laget med **new Counter2(2, 5)**](Counter2-object.png)
+
+## Alternativ utforming og kode
+
 Dette skal virke, men kunne det vært gjort på en annen måte? En variant er å la counter-variablen løpe fra 0 og oppover. Da må følgende metoder endres:
 
 ```java
@@ -72,6 +86,10 @@ void restart() {
 ```
 
 Merk hvor **isFinished** før brukte **counter**-variablen direkte, så går vi nå over til å kalle **getCounter**. Da er vi sikker å at vi sammenligner riktig verdi med **end**, uavhengig hvordan **getCounter** beregner returverdien.
+
+Objektdiagrammet vil se slik ut, med denne alternative utformingen:
+
+![Objektdiagram for objekt laget med **new Counter2(2, 5)**](Counter2-object-alt.png)
 
 De to variantene er like gode, så det er ikke noe poeng i seg selv å endre koden på denne måten, men det illustrerer to viktige poeng:
 1. Kode som bare bruker **Counter2**-objektene sine metoder, vil ikke merke endringen! Vi kan si at endringene kun er interne for **Counter2**-klassen.

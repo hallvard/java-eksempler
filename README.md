@@ -6,7 +6,7 @@ f.eks. stateandbehavior og encapsulation, for å gjøre det lettere å se når d
 
 ## Tilstand og oppførsel (stateandbehavior)
 
-- [counter](src/stateandbehavior/counter) - håndtering av en enkel teller
+- [counter](src/stateandbehavior/counter) - håndtering av en enkel teller. Eksemplet er i to trinn, [Counter1](src/stateandbehavior/counter/Counter1.md) og [Counter2](src/stateandbehavior/counter/Counter2.md).
 
 ## Innkapsling (encapsulation)
 
