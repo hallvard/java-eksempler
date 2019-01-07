@@ -88,7 +88,7 @@ Det er vanlig å illustrere hvordan konkrete objekter ser ut vha. et *objektdiag
 
 ![Objektdiagram for objekt laget med **new Counter1(2, 5)**](Counter1-object.png)
 
-I headeren i objekt-boksen har vi en id (#1), som teknisk sett ikke er en del av objektet, men er en diagramteknisk måte å gjøre det enklere å referere til figuren. Etter id-en følger det viktigste, nemlig navnet på klassen (Counter1). I hoveddelen av objekt-boksen har vi variablene, hvor både navn og konkret verdi er med. Siden verdiene kan endre seg i løpet av *levetiden* til objektet, så illustrerer diagrammet tilstanden til objektet på et bestemt *tidspunkt*. 
+I headeren i objekt-boksen har vi en id (#1), som teknisk sett ikke er en del av objektet, men er en diagramteknisk måte å gjøre det enklere å referere til figuren. Ofte brukes et tall, men noen ganger et ord. Etter id-en følger det viktigste, nemlig navnet på klassen (Counter1). I hoveddelen av objekt-boksen har vi variablene, hvor både navn og konkret verdi er med. Siden verdiene kan endre seg i løpet av *levetiden* til objektet, så illustrerer diagrammet tilstanden til objektet på et bestemt *tidspunkt*. 
 
 ### Metoder
 

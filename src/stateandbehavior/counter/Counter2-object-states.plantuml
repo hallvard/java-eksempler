@@ -4,8 +4,8 @@ object "~#1: Counter2" as counter1 {
 	end = 3
 	counter = 2
 }
-counter1 -> counter1: getCounter() == 2
-counter1 -> counter1: isFinished() == false
+counter1 ..> counter1: getCounter() == 2
+counter1 ..> counter1: isFinished() == false
 
 object "~#1: Counter2" as counter2 {
 	start = 2
@@ -13,8 +13,8 @@ object "~#1: Counter2" as counter2 {
 	counter = 3
 }
 counter1 ..d> counter2: count()
-counter2 -> counter2: getCounter() == 3
-counter2 -> counter2: isFinished() == true
+counter2 ..> counter2: getCounter() == 3
+counter2 ..> counter2: isFinished() == true
 
 counter2 ..u> counter1: restart()
 @enduml
