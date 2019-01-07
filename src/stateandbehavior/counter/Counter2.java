@@ -1,17 +1,19 @@
 package stateandbehavior.counter;
 
-public class Counter1 {
+public class Counter2 {
 
 	// først kommer variabel-deklarasjoner
 
-	int counter;
+	int start;
 	int end;
+	int counter;
 	
 	// så konstruktører
 
-	Counter1(int start, int end) {
-		this.counter = start;
+	Counter2(int start, int end) {
+		this.start = start;
 		this.end = end;
+		restart();
 	}
 
 	// deretter metoder
@@ -30,17 +32,18 @@ public class Counter1 {
 		}
 	}
 	
+	void restart() {
+		this.counter = start;
+	}
+	
 	public static void main(String[] args) {
-		Counter1 counter = new Counter1(2, 5);
+		Counter2 counter = new Counter2(2, 3);
 		System.out.println("Counter is: " + counter.getCounter());
 		System.out.println("isFinished? " + counter.isFinished());
 		counter.count();
 		System.out.println("Counter is: " + counter.getCounter());
 		System.out.println("isFinished? " + counter.isFinished());
-		counter.count();
-		System.out.println("Counter is: " + counter.getCounter());
-		System.out.println("isFinished? " + counter.isFinished());
-		counter.count();
+		counter.restart();
 		System.out.println("Counter is: " + counter.getCounter());
 		System.out.println("isFinished? " + counter.isFinished());
 		counter.count();
