@@ -34,9 +34,9 @@ Siden vi skal lage flere varianter av telleren vår, så bruker vi **Counter1** 
 package stateandbehavior.counter;
 
 class Counter1 {
-	// først kommer variabel-deklarasjoner
-	// så konstruktører
-	// deretter metoder
+   // først kommer variabel-deklarasjoner
+   // så konstruktører
+   // deretter metoder
 }
 ```
 
@@ -69,8 +69,8 @@ Det er vanlig å ha den rett etter variable-deklarasjonene, og iht. logikken vi 
 
 ```java
 Counter1(int start, int end) {
-	this.counter = start;
-	this.end = end;
+   this.counter = start;
+   this.end = end;
 }
 ```
 
@@ -96,7 +96,7 @@ Etter konstruktøren er det vanlig å ha metoder for å lese ut/spørre om objek
 
 ```java
 int getCounter() {
-	return counter;
+   return counter;
 }
 ```
 
@@ -111,7 +111,7 @@ Metoden for å sjekke om telleren har nådd (eller passert) sluttverdien, kan sk
 
 ```java
 boolean isFinished() {
-	return counter >= end;
+   return counter >= end;
 }
 ```
 
@@ -121,10 +121,10 @@ At navnet begynner med "is" skyldes et unntak i regelen med "get" som prefiks: N
 siden *verdien* av en sammenligning nettopp er en logisk verdi av typen **boolean**. En kunne skrevet
 
 ```java
-if (counter >= end>
-	return true;
+if (counter >= end)
+   return true;
 else
-	return false;
+   return false;
 ```
 
 men det er mer tungvint å både lese og skrive i et tilfelle som dette.
@@ -136,10 +136,10 @@ Den siste metoden har som oppgave å øke telleren med 1, dersom tellingen ikke 
 
 ```java
 void count() {
-	if (! isFinished()) {
-		counter = counter + 1;
-		// alternativ 1: counter += 1
-		// alternativ 2: counter++
+   if (! isFinished()) {
+      counter = counter + 1;
+      // alternativ 1: counter += 1
+      // alternativ 2: counter++
    }
 }
 ```
@@ -147,6 +147,7 @@ void count() {
 Her angir **void** at metoden *ikke* returnerer noen verdi (void = tomrom, altså manglende verdi), og derfor kan vi utelate **return**-setningen.
 **isFinished()** er et kall til metoden vi skrev over, objektet spør på en måte seg selv om tellingen er ferdig, for det er jo bare om den ikke er det at den skal økes.
 Det både gjøre koden mer leselig og unngår duplisering av kode, som generelt er en uting.
+Kommentarene under setningen som øker counter-variablen viser alternative måter å skrive det på.
 
 ### Testing med main-metoden
 
@@ -156,7 +157,7 @@ En **main**-metode kreves for å kjøre klassen som et selvstendig program, og d
 
 ```java
 public static void main(String[] args) {
-	// her putter vi koden som tester Counter1-klassen
+   // her putter vi koden som tester Counter1-klassen
 }
 ```
 
@@ -165,12 +166,12 @@ og å endre tilstanden til objektet ved å kalle **count**-metoden:
 
 ```java
 public static void main(String[] args) {
-	Counter1 counter = new Counter1(2, 3);
-	System.out.println("Counter is: " + counter.getCounter());
-	System.out.println("isFinished? " + counter.isFinished());
-	counter.count();
-	System.out.println("Counter is: " + counter.getCounter());
-	System.out.println("isFinished? " + counter.isFinished());
+   Counter1 counter = new Counter1(2, 3);
+   System.out.println("Counter is: " + counter.getCounter());
+   System.out.println("isFinished? " + counter.isFinished());
+   counter.count();
+   System.out.println("Counter is: " + counter.getCounter());
+   System.out.println("isFinished? " + counter.isFinished());
 }
 ```
 
