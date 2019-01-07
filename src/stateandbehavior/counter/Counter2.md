@@ -23,7 +23,7 @@ Siden klassenavnet nå er **Counter2** (og det *full navnet* til klassen er **st
 package stateandbehavior.counter;
 
 class Counter2 {
-	// resten er mye som før
+   // resten er mye som før
 }
 ```
 
@@ -48,14 +48,14 @@ Da må konstruktøren endres og metoden for å restarte legges til:
 ```java
 // noe endret
 Counter2(int start, int end) {
-	this.start = start;
-	this.end = end;
-	restart();
+   this.start = start;
+   this.end = end;
+   restart();
 }
 
 // ny
 void restart() {
-	counter = start;
+   counter = start;
 }
 ```
 
@@ -100,15 +100,15 @@ Dette skal virke, men kunne det vært gjort på en annen måte? En variant er å
 
 ```java
 int getCounter() {
-	return start + counter;
+   return start + counter;
 }
 
 boolean isFinished() {
-	return getCounter() >= end;
+   return getCounter() >= end;
 }
 
 void restart() {
-	counter = 0;
+   counter = 0;
 }
 ```
 
