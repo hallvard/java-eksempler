@@ -40,7 +40,7 @@ class Counter1 {
 }
 ```
 
-**package**-setningen forteller at klassen hører til "mappa" **stateandbehavior.counter** (i den fysiske mappa **stateandbehavior/counter** i **src**-mappa i prosjektet).
+**package**-setningen forteller at klassen hører til *pakka* **stateandbehavior.counter** (i den fysiske mappa **stateandbehavior/counter** i **src**-mappa i prosjektet).
 Så følger klasse-deklarasjonen, som angir navnet til klassen og dermed også *typen* til teller-objektene. Det *full navnet* til klassen er **stateandbehavior.counter.Counter1**.
 
 Klassenavnet må stemme med navnet til fila (med .java-endelse) og

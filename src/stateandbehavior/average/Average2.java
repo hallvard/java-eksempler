@@ -1,10 +1,11 @@
 package stateandbehavior.average;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Average2 {
 
-	ArrayList<Double> values = new ArrayList<>();
+	List<Double> values = new ArrayList<Double>();
 	double sum = 0.0;
 	
 	void acceptValue(double value) {

@@ -17,7 +17,7 @@ Vi stiller oss de samme grunnleggende spørsmål, som i [Counter1](../counter/Co
 
 ### Klassedeklarasjonen
 
-Vi bruker Average1 som klassenavn:
+Vi bruker **Average1** som klassenavn og legger java-fila i **stateandbehavior/average**-mappa under **src**:
 
 ```java
 package stateandbehavior.average;

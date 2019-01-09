@@ -4,49 +4,45 @@ Dette eksemplet er, sammen med [Average2](Average2.md), ment å utvide forståel
 
 ## Objekt-utforming
 
-Vi ønsker oss et objekt som kan holde rede på gjennomsnittet av en sekvens med desimaltall, som det mottar.
-Objektet mottar altså (desimal)tall utenifra og skal kunne gi tilbake gjennomsnittet av tallene det hittil har mottatt.
+Denne gang ønsker vi oss et objekt som kan holde rede på både gjennomsnittetog median av en sekvens med desimaltall, som det mottar. Denne lille og uskyldige utvidelsen krever at vi revurderer hva data som må lagres i objektet:
 
-Vi stiller oss de samme grunnleggende spørsmål, som i [Counter1](../counter/Counter1.md):
-- **Hva må objektet huske (på av data) for å kunne oppføre seg riktig?** Formelen for gjennomsnitt er *sum / antall*, så det er nok å holde rede på en løpende sum og antall (desimal)tall som er mottatt.  
-- **Hvilke data må oppgis når objektet opprettes/starter?** Ingen.
-- **Hva må en kunne spørre objektet om?** Objektet må kunne gi oss gjennomsnittet av tallene det hittil har mottatt.
-- **Hvilke operasjoner må en kunne utføre på dataene?** Objektet må kunne ta imot et nytt desimaltall.
+- **Hva må objektet huske (på av data) for å kunne oppføre seg riktig?** Medianen er den *midterste* verdien når de sorteres (midt mellom de to midterste verdiene, når det er et like antall verdier). Nå må vi altså både huske *alle* verdiene og *sortere* dem.
 
 ## Koding
 
-### Klassedeklarasjonen
+Klassedeklarasjonen blir som for **Average1**, men med **Average2** som klassenavn.
 
-Vi bruker Average2 som klassenavn:
+### Variabeldeklarasjoner
+
+For å huske alle verdiene trenger vi en variabel som ikke representerer et enkelt desimaltall, men en (dynamisk) sekvens av flere desimaltall. Dette får vi til ved å bruke **List<Double>** (leses som "liste av Double") som type. (Av tekniske grunner vi ikke går inn på her, så må vi bruke **Double** og ikke **double** som liste-type. Tilsvarende må vi bruke **Integer** istedet for **int**, om vi ønsker en liste med heltall). Fra starten skal lista være tom, så vi bruker **new ArrayList<Double>()** for å initialisere variablen. En får da et **ArrayList**-objekt, som er kodet slik at det passer når typen til variablen er **List**. Dette tilsvarer omtrent en Python-lista, men Java har (dessverre) ikke en egen syntaks for å gjøre en **ArrayList** like lettvint i bruk. En **List** holder selv rede på hvor mange elementer den inneholder, så vi trenger ikke lenger **count**-variablen:
+
+```java
+List<Double> values = new ArrayList<Double>();
+double sum = 0.0;
+```
+
+En viktig ting må nevnes: Både **List** og **ArrayList** er forhåndsdefinerte klasser i pakken **java.util**, og derfor må vi egentlig skrive **java.util.List>** og **java.util.ArrayList** for å være presis, f.eks. for å unngå sammenblanding med andre klasser med samme navn i andre pakker. Faktisk finnes det en klasse som heter **java.awt.List** og koden over er sånn sett tvetydig: Hvilken (av de to) **List**-klasse(ne) mener vi egentlig? For å slippe å måtte skrive pakkenavnet foran klassenavnet overalt, så legger vi til **import**-setninger under **package**-setningen:
 
 ```java
 package stateandbehavior.average;
 
-class Average2 {
+import java.util.List;
+import java.util.ArrayList;
+
+class Average1 {
+
    // først kommer variabel-deklarasjoner
+   List<Double> values = new ArrayList<Double>();
+   double sum = 0.0;
+   
    // så konstruktører
    // deretter metoder
 }
 ```
 
-### Variabeldeklarasjoner
+Med disse import-setningene så vil all bruk av **List** og **ArrayList** (uten pakkenavn foran) tolkes som (å referere til) henholdsvis **java.util.List** og **java.util.ArrayList**. **List** blir en slags *kortform* for **java.util.List**, slik at koden blir raskere å lese og skrive. Merk at hvis en nå faktisk ønsker å referere til **java.awt.List**, så må en nå bruke det *fulle klassenavnet* med pakkenavnet foran.
 
-Alt som objektet må huske må lagres i variabler,
-så for at **Average2**-objektene skal kunne holde rede på en løpende sum og antallet mottatte tall, så trenger vi følgende variabeldeklarasjoner:
-
-```java
-double sum = 0.0;
-int count = 0;
-```
-
-**double** angir at variablene vil ha verdier som er *desimaltall*, mens **int** brukes for *heltall*. Her fungerer deklarasjonen også som initialisering.
-I dette tilfellet kunne vi faktisk utelatt initialiseringen (men selvsagt ikke deklarasjonen) fordi 0.0 og 0 er standardverdien til henholdsvis double og int,
-slik at det går for det samme. Men generelt bør variabler som dette initialiseres, slik at ønsket startverdi gjøres eksplisitt.
-
-### Konstruktør(er)
-
-Siden det ikke kreves at en må oppgi noe ved opprettelsen av objekter, så trenger vi ingen (eksplisitt) konstruktør.
-Hvis det ikke deklareres noen, så vil Java lage en uten parametre, slik at vi kan lage et nytt **Average2**-objekt med **new Average2()**.
+Det kan virke tungvint å måtte legge inn import-setninger for alle klasser en bruker, men heldigvis har verktøy som Eclipse en snarvei for å gjøre det automatisk. Første gang en skriver **List** (f.eks. i en variabel-deklarasjon) så trykker en **<ctrl>-<space>** når markøren står bakom, velger **java.util.List** fra menyen som dukker opp, og vips så legges **import**-setningen til øverst.
 
 ### Objektdiagram
 
@@ -56,17 +52,41 @@ Opprettelse av et **Average2**-objekt med **new Average2()** gir følgende objek
 
 ### Metoder
 
+Klassen må forøvrig utvides på to måter, vi trenger en ny **getMedian**-metode, og **acceptValue**-metoden må legge den nye verdien inn i **values**-lista på riktig plass. Her er koden, med noen kommentarer for å gjøre den litt enklere å forstå.
+
 ```java
 double getMean() {
    return sum / count;
 }
 
+double getMedian() {
+   // hjelpevariabler
+   int count = values.size(), middle = count / 2;
+   // hvis antallet verdier er et partall (resten når vi deler på 2 er 0)
+   if (count % 2 == 0)
+      // returner gjennomsnittet av de to midterste verdiene
+      return (values.get(middle - 1) + values.get(middle)) / 2;
+   else
+      // ellers returner den midterste verdien
+      return values.get(middle);
+}
+
 void acceptValue(double value) {
+   // vi finner først posisjonen der den nye verdien skal legges til
+   int i = 0;
+   // vi lar i løpe fra 0 til (men ikke med) lista sin lengde
+   while (i < values.size()) {
+      // hvis verdien på posisjon i er større enn den nye,
+      // så har i kommet langt nok og vi avbryter løkka
+      if (values.get(i) > value) {
+         break;
+      }
+      i++;
+   }
+   // be lista om å legge verdien til i posisjon i
+   values.add(i, value);
+   // som før	
    sum += value;
-   // alternativ: sum = sum + value
-   count++;
-   // alternativ 1: count = count + 1
-   // alternativ 2: count += 1
 }
 ```
 
@@ -77,16 +97,18 @@ public static void main(String[] args) {
    Average2 average = new Average2();
    average.acceptValue(4.0);
    average.acceptValue(5.0);
+   System.out.println("Verdier: " + average.values);
    System.out.println("Gjennomsnitt: " + average.getMean());
-   average.acceptValue(6.0);
+   System.out.println("Middelverdi: " + average.getMedian());
+   average.acceptValue(3.0);
+   System.out.println("Verdier: " + average.values);
    System.out.println("Gjennomsnitt: " + average.getMean());
+   System.out.println("Middelverdi: " + average.getMedian());
+   average.acceptValue(0.0);
+   System.out.println("Verdier: " + average.values);
+   System.out.println("Gjennomsnitt: " + average.getMean());
+   System.out.println("Middelverdi: " + average.getMedian());
 }
 ```
 
 ![Objekttilstandsdiagram for Average2-objekt opprettet i **main**-metoden](Average2-object-states.png)
-
-Spørsmål til slutt: Hva skjer hvis vi spør om gjennomsnittet før vi har gitt inn noen tall?
-
-# Videre lesning
-
-I [Average2](Average2.md) utvider vi Average2 med beregning av medianverdi!
