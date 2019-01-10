@@ -83,6 +83,8 @@ public static void main(String[] args) {
 }
 ```
 
+Under ser du diagrammet som tilsvarer opprettelsen av **Average1**-objektet og sekvensen av kall i main-metoden.
+ 
 ![Objekttilstandsdiagram for Average1-objekt opprettet i **main**-metoden](Average1-object-states.png)
 
 Spørsmål til slutt: Hva skjer hvis vi spør om gjennomsnittet før vi har gitt inn noen tall?

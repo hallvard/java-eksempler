@@ -50,6 +50,8 @@ Opprettelse av et **Average2**-objekt med **new Average2()** gir følgende objek
 
 ![Objektdiagram for objekt laget med **new Average2()**](Average2-object.png)
 
+Du ser at en tom liste angis med "[]". I objekttilstandsdiagrammet nedenfor viser lister med en eller flere elementer.
+
 ### Metoder
 
 Klassen må forøvrig utvides på to måter, vi trenger en ny **getMedian**-metode, og **acceptValue**-metoden må legge den nye verdien inn i **values**-lista på riktig plass. Her er koden, med noen kommentarer for å gjøre den litt enklere å forstå.
@@ -67,7 +69,7 @@ double getMedian() {
       // returner gjennomsnittet av de to midterste verdiene
       return (values.get(middle - 1) + values.get(middle)) / 2;
    else
-      // ellers returner den midterste verdien
+      // ellers returnes den midterste verdien
       return values.get(middle);
 }
 

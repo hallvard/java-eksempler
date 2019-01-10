@@ -1,0 +1,18 @@
+@startuml
+object "~#1: Average2" as average1 {
+	sum = 0.0
+	count = 0
+}
+object "~#1: Average2" as average3 {
+	sum = 9.0
+	count = 2
+}
+average1 ..> average3: acceptValue(4.0), acceptValue(5.0)
+average3 ..> average3: getMean() == 4.5
+object "~#1: Average2" as average4 {
+	sum = 15.0
+	count = 3
+}
+average3 ..> average4: acceptValue(6.0)
+average4 ..> average4: getMean() == 5.0
+@enduml

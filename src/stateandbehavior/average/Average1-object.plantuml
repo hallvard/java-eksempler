@@ -1,0 +1,6 @@
+@startuml
+object "~#1: Average1" as average1 {
+	sum = 0.0
+	count = 0
+}
+@enduml
