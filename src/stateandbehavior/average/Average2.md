@@ -58,7 +58,8 @@ Klassen må forøvrig utvides på to måter, vi trenger en ny **getMedian**-meto
 
 ```java
 double getMean() {
-   return sum / count;
+   // deler sum på antall verdier, som hentes fra liste-objektet
+   return sum / values.size();
 }
 
 double getMedian() {
