@@ -11,6 +11,9 @@ f.eks. stateandbehavior og encapsulation, for å gjøre det lettere å se når d
 
 ## Innkapsling (encapsulation)
 
+- [Date](src/encapsulation/Date.md) - klasse for representasjon av dato.
+- [Person](src/encapsulation/Person.md) - klasse for representasjon av person-navn.
+
 ## Objektstrukturer (objectstructures)
 
 ## Standardteknikker (patterns)
