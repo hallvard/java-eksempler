@@ -1,0 +1,12 @@
+@startuml
+object "~#p1: Person1" as p11 {
+	givenName = null
+	familyName = null
+}
+object "~#p1: Person1" as p12 {
+	givenName = "Hallvard"
+	familyName = "Trætteberg"
+}
+p11 ..> p12: setGivenName("Hallvard"), setFamilyName("Trætteberg");
+p12 ..> p12: getGivenName() + " " + getFamilyName() == getFullName();
+@enduml
