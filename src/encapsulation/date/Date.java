@@ -1,4 +1,4 @@
-package encapsulation;
+package encapsulation.date;
 
 public class Date {
 
