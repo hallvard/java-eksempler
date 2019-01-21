@@ -1,0 +1,20 @@
+@startuml
+object "~#2: TimeInterval1" as ti1 {
+	startHour = 12
+	startMin = 15
+	intervalLength = 105
+}
+object "~#2: TimeInterval1" as ti2 {
+	startHour = 14
+	startMin = 15
+	intervalLength = 105
+}
+ti1 ..> ti2: setStartHour(14)
+object "~#2: TimeInterval1" as ti3 {
+	startHour = 14
+	startMin = 00
+	intervalLength = 105
+}
+ti2 ..> ti3: setStartMin(0)
+ti3 ..> ti3: setStartHour(23) throws IllegalArgumentException
+@enduml
