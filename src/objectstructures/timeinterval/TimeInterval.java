@@ -34,7 +34,7 @@ public class TimeInterval {
 		// husk den gamle intervall-lengden
 		int intervalLength = getIntervalLength();
 		// sjekk om den nye kombinasjon av start og lengde er gyldig
-		checkInt(intervalLength, 0, 24 * 60 - minutes(hour, getStartMinutes()));
+		checkInt(intervalLength, 0, 24 * 60 - minutes(hour, start.getMinutes()));
 
 		start.setHour(hour);
 		// juster endHour og endMin vha. setIntervalLength
@@ -50,7 +50,7 @@ public class TimeInterval {
 		// husk den gamle intervall-lengden
 		int intervalLength = getIntervalLength();
 		// sjekk om den nye kombinasjon av start og lengde er gyldig
-		checkInt(intervalLength, 0, 24 * 60 - minutes(getStartHour(), minutes));
+		checkInt(intervalLength, 0, 24 * 60 - minutes(start.getHour(), minutes));
 
 		start.setMinutes(minutes);
 		// juster endHour og endMin vha. setIntervalLength
@@ -62,7 +62,7 @@ public class TimeInterval {
 	}
 
 	public void setEndHour(int hour) {
-		checkInt(hour, getStartHour(), 24);
+		checkInt(hour, start.getHour(), 24);
 		end.setHour(hour);
 	}
 
@@ -79,19 +79,19 @@ public class TimeInterval {
 	}
 
 	public void setEndMinutes(int minutes) {
-		checkInt(minutes(getStartHour(), getStartMinutes(), getEndHour(), minutes), 0, 24 * 60);
+		checkInt(minutes(start.getHour(), start.getMinutes(), end.getHour(), minutes), 0, 24 * 60);
 		end.setMinutes(minutes);
 	}
 
 	public int getIntervalLength() {
-		return minutes(getStartHour(), getStartMinutes(), getEndHour(), getEndMinutes());
+		return minutes(start.getHour(), start.getMinutes(), end.getHour(), end.getMinutes());
 	}
 
 	public void setIntervalLength(int minutes) {
 		// sjekk om den nye kombinasjon av start og lengde er gyldig
-		checkInt(minutes, 0, 24 * 60 - minutes(getStartHour(), getStartMinutes()));
-		end.setHour(getStartHour() + (getStartMinutes() + minutes) / 60);
-		end.setMinutes((getStartMinutes() + minutes) % 60);		
+		checkInt(minutes, 0, 24 * 60 - minutes(start.getHour(), start.getMinutes()));
+		end.setHour(start.getHour() + (start.getMinutes() + minutes) / 60);
+		end.setMinutes((start.getMinutes() + minutes) % 60);		
 	}
 
 	//

@@ -41,11 +41,4 @@ public class TimePoint {
 		checkInt(minutes, 0, 60);
 		min = minutes;
 	}
-
-	//
-
-	public static void main(String[] args) {
-		TimePoint tp = new TimePoint(12, 15);
-		System.out.println(tp);
-	}
 }

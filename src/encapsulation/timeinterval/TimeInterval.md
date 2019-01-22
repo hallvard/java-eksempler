@@ -249,3 +249,7 @@ Anta f.eks. at en har en tom konstruktør som initialiserer tidsintervallet til 
 Alternativet er å la endringsmetodene sette en større del av tilstanden om gangen, f.eks. ha en **set**-metode som tar inn de samme argumentene som konstruktøren og endrer hele tilstanden. Dette vil gjøre objektene både enklere og sikrere å bruke. Diagrammet under illustrerer problemet og løsningen:
 
 ![Endring av tilstand med ulike metodekall](TimeIntervalN-object-states.png)
+
+## Videre lesning
+
+Vi ser på en fjerde variant i [objectstructures.TimeInterval](../../objectstructures/timeinterval/TimeInterval.md), hvor vi introduserer en hjelpeklasse for tidspunkt.

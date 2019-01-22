@@ -1,4 +1,4 @@
-# Lager for eksempel-kode
+# Repo for eksempel-kode
 
 Dette kode-lageret er for eksempler til bruk i TDT4100-forelesninger og/eller som
 undervisningsmateriell. Eksemplene følger samme klassifisering og pakkestruktur som øvingene,
@@ -11,10 +11,13 @@ f.eks. stateandbehavior og encapsulation, for å gjøre det lettere å se når d
 
 ## Innkapsling (encapsulation)
 
-- [Date](src/encapsulation/Date.md) - klasse for representasjon av dato.
-- [Person](src/encapsulation/Person.md) - klasse for representasjon av person-navn.
+- [Date](src/encapsulation/date/Date.md) - klasse for representasjon av dato.
+- [Person](src/encapsulation/person/Person.md) - klasse for representasjon av person-navn.
+- [TimeInterval](src/encapsulation/timeinterval/TimeInterval.md) - klasse for representasjon av tidsintervall.
 
 ## Objektstrukturer (objectstructures)
+
+- [TimeInterval](src/objectstructures/timeinterval/TimeInterval.md) - klasse for representasjon av tidsintervall, ved bruk av hjelpeklasse for tidspunkt.
 
 ## Standardteknikker (patterns)
 
