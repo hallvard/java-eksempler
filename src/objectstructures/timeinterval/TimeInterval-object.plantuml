@@ -1,0 +1,14 @@
+@startuml
+object "~#ti: TimeInterval" as ti {
+}
+object "~#tp1: TimePoint" as tp1 {
+	hour = 12
+	min = 15
+}
+object "~#tp2: TimePoint" as tp2 {
+	hour = 14
+	min = 0
+}
+ti --> tp1: start
+ti --> tp2: end
+@enduml
