@@ -24,3 +24,7 @@ f.eks. stateandbehavior og encapsulation, for å gjøre det lettere å se når d
 ### Delegering (delegation)
 
 ### Observert-observatør (observable)
+
+## JavaFX
+
+- [HelloWorld](src/javafx/helloworld/README.md) - minimalistisk eksempel på app med knapp som endrer tekst når den trykkes på
