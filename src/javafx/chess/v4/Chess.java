@@ -1,4 +1,4 @@
-package javafx.chess.v3;
+package javafx.chess.v4;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,17 +26,25 @@ public class Chess implements Iterable<Piece> {
 		return allPieces.iterator();
 	}
 	
-	public String move(char fromColumn, int fromRow, char toColumn, int toRow, boolean reallyDo) {
-		Piece.checkTo(fromColumn, fromRow);
-		Piece.checkTo(toColumn, toRow);
-		var fromPiece = findPieceAt(fromColumn, fromRow);
+	private boolean whitesTurn = true;
+	
+	public boolean isWhitesTurn() {
+		return whitesTurn;
+	}
+
+	public String move(char fromCol, int fromRow, char toCol, int toRow, boolean reallyDo) {
+		Piece.checkTo(fromCol, fromRow);
+		Piece.checkTo(toCol, toRow);
+		var fromPiece = findPieceAt(fromCol, fromRow);
 		if (fromPiece == null) {
-			return "There is no piece at " + fromColumn + fromRow;			
-		} else if (fromColumn == toColumn && fromRow == toRow) {
+			return "There is no piece at " + fromCol + fromRow;			
+		} else if (fromPiece.isWhite() != whitesTurn) {
+			return "Cannot move the opponent's piece";
+		} else if (fromCol == toCol && fromRow == toRow) {
 			return "A piece cannot move to the same square";
 		} else {
-			var toPiece = findPieceAt(toColumn, toRow);
-			var error = checkMove(fromPiece, toColumn, toRow, toPiece);
+			var toPiece = findPieceAt(toCol, toRow);
+			var error = checkMove(fromPiece, toCol, toRow, toPiece);
 			if (error != null) {
 				return error;
 			} else {
@@ -48,32 +56,33 @@ public class Chess implements Iterable<Piece> {
 					}
 				}
 				if (reallyDo) {
-					fromPiece.moveTo(toColumn, toRow);
+					fromPiece.moveTo(toCol, toRow);
+					whitesTurn = ! whitesTurn;
 				}
 			}
 		}
 		return null;
 	}
 	
-	private String checkMove(Piece piece, char toColumn, int toRow, Piece takes) {
-		int dl = toColumn - piece.getColumn(), adl = Math.abs(dl);
+	private String checkMove(Piece piece, char toCol, int toRow, Piece takes) {
+		int dl = toCol - piece.getColumn(), adl = Math.abs(dl);
 		int dr = toRow - piece.getRow(), adr = Math.abs(dr);
 		switch (piece.getKind()) {
 		case 'K':
 			if (adl > 1 || adr > 1) return "A King can only move one square in any direction";
-			else if (isPieceBetween(piece, toColumn, toRow, takes)) return "A King cannot jump over other pieces";
+			else if (isPieceBetween(piece, toCol, toRow, takes)) return "A King cannot jump over other pieces";
 			else return null;
 		case 'B':
 			if (adl != adr) return "A Bishop must move diagonally";
-			else if (isPieceBetween(piece, toColumn, toRow, takes)) return "A Bishop cannot jump over other pieces";
+			else if (isPieceBetween(piece, toCol, toRow, takes)) return "A Bishop cannot jump over other pieces";
 			else return null;
 		case 'R':
 			if (adl != 0 && adr != 0) return "A Rook must move horizontally or vertically";
-			else if (isPieceBetween(piece, toColumn, toRow, takes)) return "A Rook cannot jump over other pieces";
+			else if (isPieceBetween(piece, toCol, toRow, takes)) return "A Rook cannot jump over other pieces";
 			else return null;
 		case 'Q':
 			if (adl != adr && adl != 0 && adr != 0) return "A Queen  must move horizontal, vertically or diagonally";
-			else if (isPieceBetween(piece, toColumn, toRow, takes)) return "A Queen cannot jump over other pieces";
+			else if (isPieceBetween(piece, toCol, toRow, takes)) return "A Queen cannot jump over other pieces";
 			else return null;
 		case 'N':
 			if (adl * adr != 2) return "A Knight must move one square in one direction and two in the other";

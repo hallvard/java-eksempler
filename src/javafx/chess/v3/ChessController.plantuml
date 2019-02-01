@@ -1,0 +1,28 @@
+@startuml
+class "ChessController v2" as ChessController2 {
+	~List<Piece> allPieces
+	+ChessController()
+	~void initialize()
+	~void updateBoard()
+	~void handleMove()
+	~boolean isValidMove(Piece piece, char toX, int toY, Piece takes)
+	-boolean isPieceBetween(Piece piece, char toX, int toY, Piece takes)
+	-boolean isBetween(char x1, int y1, char x, int y, char x2, int y2)
+	~Piece findPieceAt(char x, int y)
+}
+class "ChessController v3" as ChessController3 {
+	~void initialize()
+	-void updateBoard()
+	~void handleMove()
+}
+class Chess {
+	-List<Piece> allPieces
+	+Chess()
+	+String move(char fromColumn, int fromRow, char toColumn, int toRow, boolean reallyDo)
+	-String checkMove(Piece piece, char toColumn, int toRow, Piece takes)
+	-boolean isPieceBetween(Piece piece, char toColumn, int toRow, Piece takes)
+	-boolean isBetween(char col1, int row1, char col, int row, char col2, int row2)
+	+Piece findPieceAt(char col, int row)
+}
+ChessController3 --> Chess: chess
+@enduml

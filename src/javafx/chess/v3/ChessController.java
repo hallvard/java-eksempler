@@ -10,11 +10,7 @@ import javafx.scene.control.TextField;
 
 public class ChessController {
 	
-	private Chess chess;
-	
-	public ChessController() {
-		chess = new Chess();
-	}
+	private Chess chess = new Chess();
 
 	@FXML private Label a1, a2, a3, a4, a5, a6, a7, a8;
 	@FXML private Label b1, b2, b3, b4, b5, b6, b7, b8;
@@ -29,22 +25,15 @@ public class ChessController {
 
 	private Map<Character, Character> whiteSymbols = new HashMap<>(), blackSymbols = new HashMap<>();
 	
+	private static String unicodeSymbols = "R♜♖N♞♘B♝♗Q♛♕K♚♔P♟♙";
+	
 	@FXML
 	void initialize() {
-		blackSymbols.put('R', '♜');
-		blackSymbols.put('N', '♞');
-		blackSymbols.put('B', '♝');
-		blackSymbols.put('Q', '♛');
-		blackSymbols.put('K', '♚');
-		blackSymbols.put('P', '♟');
-
-		whiteSymbols.put('R', '♖');
-		whiteSymbols.put('N', '♘');
-		whiteSymbols.put('B', '♗');
-		whiteSymbols.put('Q', '♕');
-		whiteSymbols.put('K', '♔');
-		whiteSymbols.put('P', '♙');
-
+		for (var i = 0; i < unicodeSymbols.length(); i += 3) {
+			var pieceKind = unicodeSymbols.charAt(i);
+			blackSymbols.put(pieceKind, unicodeSymbols.charAt(i + 1));
+			whiteSymbols.put(pieceKind, unicodeSymbols.charAt(i + 2));
+		}
 		allLabels = List.of(
 				a1, a2, a3, a4, a5, a6, a7, a8,
 				b1, b2, b3, b4, b5, b6, b7, b8,
@@ -67,7 +56,7 @@ public class ChessController {
 			label.setText("");
 		}
 		for (var piece : chess) {
-			var label = allLabels.get((piece.getLine() - 'a') * 8 + piece.getRow() - 1);
+			var label = allLabels.get((piece.getColumn() - 'a') * 8 + piece.getRow() - 1);
 			label.setText("" + getPieceSymbol(piece));
 		}
 	}
@@ -76,7 +65,6 @@ public class ChessController {
 	@FXML TextField to;
 	
 	@FXML Label message;
-	@FXML Label status;
 	
 	@FXML
 	void handleMove() {

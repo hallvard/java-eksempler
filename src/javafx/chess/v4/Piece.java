@@ -1,4 +1,4 @@
-package javafx.chess.v3;
+package javafx.chess.v4;
 
 public class Piece {
 	
