@@ -1,7 +1,6 @@
 package javafx.chess.v2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -12,7 +11,7 @@ public class ChessController {
 
 	List<Piece> allPieces = new ArrayList<>();
 
-	List<String> startPieces = Arrays.asList(
+	List<String> startPieces = List.of(
 			"Ra8♜", "Nb8♞", "Bc8♝", "Qd8♛", "Ke8♚", "Bf8♝", "Ng8♞", "Rh8♜",
 			"Pa7♟", "Pb7♟", "Pc7♟", "Pd7♟", "Pe7♟", "Pf7♟", "Pg7♟", "Ph7♟",
 			"Pa2♙", "Pb2♙", "Pc2♙", "Pd2♙", "Pe2♙", "Pf2♙", "Pg2♙", "Ph2♙",
@@ -161,7 +160,15 @@ public class ChessController {
 	}
 
 	private boolean isBetween(char x1, int y1, char x, int y, char x2, int y2) {
-		return Math.signum(x - x1) == Math.signum(x2 - x) && Math.signum(y - y1) == Math.signum(y2 - y);
+		int dl = (int) Math.signum(x2 - x1), dr = (int) Math.signum(y2 - y1);
+		while (x1 != x2 || y1 != y2) {
+			if (x1 == x && y1 == y) {
+				return true;
+			}
+			x1 += dl;
+			y1 += dr;
+		}
+		return false;
 	}
 
 	Piece findPieceAt(char x, int y) {

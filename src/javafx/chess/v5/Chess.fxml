@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+
+
+<BorderPane prefHeight="1000.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9"
+	fx:controller="javafx.chess.v5.ChessController">
+   <top>
+      <VBox prefHeight="100.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+        	<MenuBar>
+        		<Menu text="File">
+        		</Menu>
+        		<Menu text="Edit">
+        			<MenuItem fx:id="undoMenuItem" text="Undo" onAction="#handleUndoMove"/>
+        			<MenuItem fx:id="redoMenuItem" text="Redo" onAction="#handleRedoMove"/>
+        		</Menu>
+        	</MenuBar>
+        	<HBox>
+            <Label text="From" />
+            <TextField fx:id="from" prefWidth="61.0" />
+            <Label text="To" />
+            <TextField fx:id="to" prefWidth="61.0" />
+            <Button mnemonicParsing="false" text="Move" onAction="#handleMove"/>
+        	</HBox>
+           <Label fx:id="message" prefWidth="600.0" />
+      </VBox>
+   </top>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="80.0" BorderPane.alignment="CENTER">
+           <Button fx:id="undoButton" mnemonicParsing="false" text="Undo" onAction="#handleUndoMove"/>
+           <Button fx:id="redoButton" mnemonicParsing="false" text="Redo" onAction="#handleRedoMove"/>
+      </VBox>
+   </right>
+   <bottom>
+         <Label fx:id="status" prefWidth="400.0" />
+   </bottom>
+   <center>
+      <Pane prefHeight="800.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+         <children>
+            <Rectangle fx:id="a8s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="69.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="b8s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="149.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="c8s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="229.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="d8s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="309.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="e8s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="389.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="f8s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="469.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="g8s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="549.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="h8s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="629.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="a7s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="69.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="b7s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="149.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="c7s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="229.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="d7s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="309.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="e7s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="389.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="f7s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="469.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="g7s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="549.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="h7s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="629.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="a6s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="69.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="b6s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="149.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="c6s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="229.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="d6s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="309.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="e6s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="389.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="f6s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="469.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="g6s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="549.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="h6s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="629.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="a5s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="69.0" layoutY="291.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="b5s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="149.0" layoutY="291.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="c5s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="229.0" layoutY="291.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="d5s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="309.0" layoutY="291.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="e5s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="389.0" layoutY="291.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="f5s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="469.0" layoutY="291.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="g5s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="549.0" layoutY="291.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="h5s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="629.0" layoutY="291.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="a4s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="69.0" layoutY="371.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="b4s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="149.0" layoutY="371.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="c4s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="229.0" layoutY="371.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="d4s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="309.0" layoutY="371.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="e4s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="389.0" layoutY="371.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="f4s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="469.0" layoutY="371.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="g4s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="549.0" layoutY="371.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="h4s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="629.0" layoutY="371.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="a3s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="69.0" layoutY="451.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="b3s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="149.0" layoutY="451.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="c3s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="229.0" layoutY="451.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="d3s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="309.0" layoutY="451.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="e3s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="389.0" layoutY="451.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="f3s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="469.0" layoutY="451.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="g3s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="549.0" layoutY="451.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="h3s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="629.0" layoutY="451.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="a2s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="69.0" layoutY="531.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="b2s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="149.0" layoutY="531.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="c2s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="229.0" layoutY="531.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="d2s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="309.0" layoutY="531.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="e2s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="389.0" layoutY="531.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="f2s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="469.0" layoutY="531.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="g2s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="549.0" layoutY="531.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="h2s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="629.0" layoutY="531.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="a1s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="69.0" layoutY="611.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="b1s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="149.0" layoutY="611.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="c1s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="229.0" layoutY="611.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="d1s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="309.0" layoutY="611.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="e1s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="389.0" layoutY="611.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="f1s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="469.0" layoutY="611.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="g1s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#a8b4c3" height="80.0" layoutX="549.0" layoutY="611.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Rectangle fx:id="h1s" onMouseClicked="#handleClickSquare" arcHeight="5.0" arcWidth="5.0" fill="#e9edf2" height="80.0" layoutX="629.0" layoutY="611.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+            <Label alignment="CENTER" layoutX="100.0" layoutY="5.0" text="a">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="180.0" layoutY="5.0" text="b">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="261.0" layoutY="5.0" text="c">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="341.0" layoutY="5.0" text="d">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="424.0" layoutY="5.0" text="e">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="504.0" layoutY="5.0" text="f">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="578.0" layoutY="5.0" text="g">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="658.0" layoutY="5.0" text="h">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="31.0" layoutY="632.0" text="1">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="31.0" layoutY="552.0" text="2">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="31.0" layoutY="470.0" text="3">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="31.0" layoutY="390.0" text="4">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="31.0" layoutY="321.0" text="5">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="31.0" layoutY="241.0" text="6">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="31.0" layoutY="159.0" text="7">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="31.0" layoutY="79.0" text="8">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="a8" alignment="CENTER" layoutX="99.0" layoutY="72.0" text="a8" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="b8" alignment="CENTER" layoutX="179.0" layoutY="72.0" text="b8" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="c8" alignment="CENTER" layoutX="260.0" layoutY="72.0" text="c8" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="d8" alignment="CENTER" layoutX="340.0" layoutY="72.0" text="d8" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="e8" alignment="CENTER" layoutX="423.0" layoutY="72.0" text="e8" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="f8" alignment="CENTER" layoutX="503.0" layoutY="72.0" text="f8" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="g8" alignment="CENTER" layoutX="577.0" layoutY="72.0" text="g8" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="h8" alignment="CENTER" layoutX="657.0" layoutY="72.0" text="h8" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="a7" alignment="CENTER" layoutX="101.0" layoutY="152.0" text="a7" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="b7" alignment="CENTER" layoutX="181.0" layoutY="152.0" text="b7" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="c7" alignment="CENTER" layoutX="262.0" layoutY="152.0" text="c7" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="d7" alignment="CENTER" layoutX="342.0" layoutY="152.0" text="d7" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="e7" alignment="CENTER" layoutX="425.0" layoutY="152.0" text="e7" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="f7" alignment="CENTER" layoutX="505.0" layoutY="152.0" text="f7" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="g7" alignment="CENTER" layoutX="579.0" layoutY="152.0" text="g7" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="h7" alignment="CENTER" layoutX="659.0" layoutY="152.0" text="h7" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="a6" alignment="CENTER" layoutX="101.0" layoutY="234.0" text="a6" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="b6" alignment="CENTER" layoutX="181.0" layoutY="234.0" text="b6" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="c6" alignment="CENTER" layoutX="262.0" layoutY="234.0" text="c6" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="d6" alignment="CENTER" layoutX="342.0" layoutY="234.0" text="d6" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="e6" alignment="CENTER" layoutX="425.0" layoutY="234.0" text="e6" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="f6" alignment="CENTER" layoutX="505.0" layoutY="234.0" text="f6" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="g6" alignment="CENTER" layoutX="579.0" layoutY="234.0" text="g6" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="h6" alignment="CENTER" layoutX="659.0" layoutY="234.0" text="h6" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="a5" alignment="CENTER" layoutX="101.0" layoutY="311.0" text="a5" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="b5" alignment="CENTER" layoutX="181.0" layoutY="311.0" text="b5" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="c5" alignment="CENTER" layoutX="262.0" layoutY="311.0" text="c5" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="d5" alignment="CENTER" layoutX="342.0" layoutY="311.0" text="d5" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="e5" alignment="CENTER" layoutX="425.0" layoutY="311.0" text="e5" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="f5" alignment="CENTER" layoutX="505.0" layoutY="311.0" text="f5" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="g5" alignment="CENTER" layoutX="579.0" layoutY="311.0" text="g5" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="h5" alignment="CENTER" layoutX="659.0" layoutY="311.0" text="h5" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="a4" alignment="CENTER" layoutX="101.0" layoutY="392.0" text="a4" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="b4" alignment="CENTER" layoutX="181.0" layoutY="392.0" text="b4" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="c4" alignment="CENTER" layoutX="262.0" layoutY="392.0" text="c4" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="d4" alignment="CENTER" layoutX="342.0" layoutY="392.0" text="d4" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="e4" alignment="CENTER" layoutX="425.0" layoutY="392.0" text="e4" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="f4" alignment="CENTER" layoutX="505.0" layoutY="392.0" text="f4" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="g4" alignment="CENTER" layoutX="579.0" layoutY="392.0" text="g4" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="h4" alignment="CENTER" layoutX="659.0" layoutY="392.0" text="h4" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="a3" alignment="CENTER" layoutX="101.0" layoutY="471.0" text="a3" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="b3" alignment="CENTER" layoutX="181.0" layoutY="471.0" text="b3" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="c3" alignment="CENTER" layoutX="262.0" layoutY="471.0" text="c3" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="d3" alignment="CENTER" layoutX="342.0" layoutY="471.0" text="d3" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="e3" alignment="CENTER" layoutX="425.0" layoutY="471.0" text="e3" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="f3" alignment="CENTER" layoutX="505.0" layoutY="471.0" text="f3" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="g3" alignment="CENTER" layoutX="579.0" layoutY="471.0" text="g3" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="h3" alignment="CENTER" layoutX="659.0" layoutY="471.0" text="h3" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="a2" alignment="CENTER" layoutX="101.0" layoutY="552.0" text="a2" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="b2" alignment="CENTER" layoutX="181.0" layoutY="552.0" text="b2" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="c2" alignment="CENTER" layoutX="262.0" layoutY="552.0" text="c2" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="d2" alignment="CENTER" layoutX="342.0" layoutY="552.0" text="d2" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="e2" alignment="CENTER" layoutX="425.0" layoutY="552.0" text="e2" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="f2" alignment="CENTER" layoutX="505.0" layoutY="552.0" text="f2" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="g2" alignment="CENTER" layoutX="579.0" layoutY="552.0" text="g2" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="h2" alignment="CENTER" layoutX="659.0" layoutY="552.0" text="h2" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="a1" alignment="CENTER" layoutX="101.0" layoutY="632.0" text="a1" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="b1" alignment="CENTER" layoutX="181.0" layoutY="632.0" text="b1" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="c1" alignment="CENTER" layoutX="262.0" layoutY="632.0" text="c1" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="d1" alignment="CENTER" layoutX="342.0" layoutY="632.0" text="d1" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="e1" alignment="CENTER" layoutX="425.0" layoutY="632.0" text="e1" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="f1" alignment="CENTER" layoutX="505.0" layoutY="632.0" text="f1" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="g1" alignment="CENTER" layoutX="579.0" layoutY="632.0" text="g1" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="h1" alignment="CENTER" layoutX="659.0" layoutY="632.0" text="h1" onMouseClicked="#handleClickPiece">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
