@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.shopping.v0.ShoppingController">
+   <children>
+      <Pane prefHeight="495.0" prefWidth="560.0">
+         <children>
+            <Text fx:id="welcomeText" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Handlekurv-app" textAlignment="CENTER" wrappingWidth="560.0000000081491">
+               <font>
+                  <Font size="38.0" />
+               </font>
+            </Text>
+            <Text fx:id="total" layoutX="450.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="100.0" />
+            <TitledPane animated="false" collapsible="false" layoutY="80.0" prefHeight="413.0" prefWidth="280.0" text="Tilgjengelige varer">
+              <content>
+                <AnchorPane fx:id="availablePane" minHeight="0.0" minWidth="0.0" prefHeight="387.0" prefWidth="280.0">
+                     <children>
+                        <Pane fx:id="newPane" layoutX="49.0" layoutY="1.0" prefHeight="70.0" prefWidth="230.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false">
+                           <children>
+                              <TextField fx:id="nameNew" layoutX="10.0" layoutY="10.0" promptText="Vare" />
+                              <TextField fx:id="priceNew" layoutX="10.0" layoutY="35.0" promptText="Pris" />
+                              <Button layoutX="170.0" layoutY="10.0" mnemonicParsing="false" onAction="#addAvailable" prefHeight="50.0" prefWidth="50.0" text="Add" />
+                           </children>
+                        </Pane>
+                     </children></AnchorPane>
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" collapsible="false" layoutX="280.0" layoutY="80.0" prefHeight="413.0" prefWidth="280.0" text="I handlekurv">
+               <content>
+                  <AnchorPane fx:id="cartPane" minHeight="0.0" minWidth="0.0" prefHeight="387.0" prefWidth="280.0" />
+               </content>
+            </TitledPane>
+            <Button layoutX="255.0" layoutY="80.0" mnemonicParsing="false" onAction="#toggleView" prefHeight="25.0" prefWidth="26.0" text="+" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

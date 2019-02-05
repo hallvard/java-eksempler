@@ -1,0 +1,12 @@
+Potet,2
+Melk,20
+Laks,50
+Brokkoli,15
+Eple,5
+Banan,8
+BigJava,800
+Brus,25
+Mango,20
+Is,25
+Agurk,15
+Te,20
