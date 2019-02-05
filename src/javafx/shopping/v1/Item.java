@@ -7,12 +7,12 @@ public class Item {
 	private int quantity;
 
 	public Item(String name, int price) {
-		if (price <= 0) {
+		if (price < 0) {
 			throw new IllegalArgumentException("Negative price for " + name);
 		}
 		this.name = name;
 		this.price = price;
-		this.quantity = 1;
+		this.quantity = 0;
 	}
 	
 	public int getPrice() {
@@ -40,7 +40,7 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return "" + this.quantity + ": " + this.name + " " + this.price;
+		return this.quantity + " " + this.name + "\n" + this.getTotalPrice() + ",-";
 	}
 
 }

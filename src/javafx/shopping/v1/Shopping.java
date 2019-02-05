@@ -4,18 +4,35 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Shopping {
 
-	private List<Item> availableItems;
-	private Cart cart;
-
+	private Cart cart = new Cart();
+	private List<Item> availableItems = List.of(
+			new Item("Banan",7),
+			new Item("Melk", 20),
+			new Item("Sukker", 30),
+			new Item("Loff", 15),
+			
+			new Item("Juice", 25),
+			new Item("Laks", 50),
+			new Item("Eple",7),
+			new Item("Brus", 20),
+			
+			new Item("BigJava", 800),
+			new Item("Appelsin", 7),
+			new Item("Kaffe", 20),
+			new Item("Kjeks", 15),
+			
+			new Item("Biff", 40),
+			new Item("Torsk", 40),
+			new Item("Ris", 15),
+			new Item("Pesto",20)
+			);
+	
 	public Shopping() {
-		this.cart = new Cart();
-		this.availableItems = loadItems();
 		loadState();
 	}
 	
@@ -23,65 +40,33 @@ public class Shopping {
 		return this.cart.getTotal();
 	}
 	
-	public List<Item> getAvailableItems() {
-		return availableItems;
+	public Item getAvailableItem(int index) {
+		if (index >= availableItems.size()) return null;
+		return availableItems.get(index);
 	}
 	
-	public List<Item> getCart() {
-		return this.cart.getCart();
-	}
-	
-	public void addToCart(Item item) {
-		this.cart.addToCart(item);
+	public void addNToCart(Item item, int n) {
+		this.cart.addNToCart(item, n);
 	}
 	
 	public void removeFromCart(Item item) {
 		this.cart.removeFromCart(item);
 	}
 	
-	public void addAvailableItem(Item item) {
-		availableItems.add(item);
-	}
-	
-	public List<Item> loadItems() {
-		try {
-			Scanner in = new Scanner(new FileReader("src/javafx/shopping/v1/items.txt"));
-			List<Item> items = new ArrayList<Item>();
-			while (in.hasNext()) {
-				String line = in.next();
-				String[] parts = line.split(",");
-				Item item = new Item(parts[0], Integer.valueOf(parts[1]));
-				items.add(item);
-			}
-			in.close();
-			return items;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return new ArrayList<Item>();
-		}
-	}
-	
-	public void saveItems() {
-		PrintWriter writer;
-		try {
-			writer = new PrintWriter("src/javafx/shopping/v1/items.txt", "UTF-8");
-			for (Item item : availableItems) {
-				writer.println(item.getName() + "," + String.valueOf(item.getPrice()));
-			}
-			writer.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+	public Item findItem(Item item) {
+		return this.cart.findItem(item);
 	}
 	
 	public void saveState() {
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter("src/javafx/shopping/v1/cart.txt", "UTF-8");
-			for (Item item : getCart()) {
+			int counter = 0;
+			Item item = cart.getItem(counter);
+			while (item != null) {
 				writer.println(item.getName() + "," + String.valueOf(item.getPrice()) + "," + item.getQuanity());
+				counter++;
+				item = cart.getItem(counter);
 			}
 			writer.close();
 		} catch (FileNotFoundException e) {
@@ -98,13 +83,14 @@ public class Shopping {
 				String line = in.next();
 				String[] parts = line.split(",");
 				Item item = new Item(parts[0], Integer.valueOf(parts[1]));
-				item.setQuantity(Integer.valueOf(parts[2]));
-				addToCart(item);
+				int qty = Integer.valueOf(parts[2]);
+				addNToCart(item, qty);
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
+
 	
 }

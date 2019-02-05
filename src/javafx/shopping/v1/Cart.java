@@ -7,35 +7,38 @@ public class Cart {
 	
 	private List<Item> cart = new ArrayList<>();
 	
-	public List<Item> getCart() {
-		return cart;
+	public Item getItem(int index) {
+		if (index >= cart.size()) return null;
+		return cart.get(index);
 	}
 	
-	public void addToCart(Item item) {
-		Item cartItem = getItem(item);
+	public void addNToCart(Item item, int n) {
+		Item cartItem = findItem(item);
 		if (cartItem == null) {
 			cart.add(item);
+			item.setQuantity(n);
 		} else {
-			var newQty = cartItem.getQuanity() + 1;
-			cartItem.setQuantity(newQty);
+			var newQty = cartItem.getQuanity() + n;
+			item.setQuantity(newQty);
 		}
 	}
 	
-	public Item getItem(Item item) {
+	public void removeFromCart(Item item) {
+		if (findItem(item) == null) {
+			throw new IllegalArgumentException(item.getName() + " not in cart");
+		} else {
+			item.setQuantity(0);
+			cart.remove(item);
+		}
+	}
+	
+	public Item findItem(Item item) {
 		for (Item cartItem : cart) {
 			if (item.getName().equals(cartItem.getName())) {
 				return cartItem;
 			}
 		}
 		return null;
-	}
-
-	public void removeFromCart(Item item) {
-		if (getItem(item) == null) {
-			throw new IllegalArgumentException(item.getName() + " not in cart");
-		} else {
-			cart.remove(item);
-		}
 	}
 	
 	public double getTotal() {

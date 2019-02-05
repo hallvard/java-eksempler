@@ -1,0 +1,6 @@
+Melk,20,1
+Sukker,30,1
+BigJava,800,1
+Torsk,40,1
+Ris,15,1
+Kjeks,15,1

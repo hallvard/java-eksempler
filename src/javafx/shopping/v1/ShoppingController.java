@@ -1,205 +1,95 @@
 package javafx.shopping.v1;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class ShoppingController {
 	
-	Shopping shopping;
+	//The shopping model
+	Shopping shopping = new Shopping();
 	
-	//Felter for elementer i FXML
+	//FXML-elements
 	@FXML Text welcomeText, total;
 	@FXML AnchorPane availablePane, cartPane;
-	@FXML TextField nameNew, priceNew;
-	@FXML Pane newPane;
 	
-	//Tilstandsvariabler for � holde styr p� ledige x- og y-koordinater for Buttons
-	private int availX = 0;
-	private int availY = 0;
-	private int cartX = 0;
-	private int cartY = 0;
+	//Mapping buttons to items and vice versa, quite similar to dictionaries in Python
+	private Map<Button, Item> cartButtonToItem = new HashMap<>();
+	private Map<Button, Item> availButtonToItem = new HashMap<>();
+	private Map<Item, Button> itemToCartButton = new HashMap<>();
 	
-	//HashMap (omtrent som en dictionary i Python) for � holde oversikt over hvilken Item som tilh�rer en Button
-	private HashMap<Button, Item> cartButtonToItem = new HashMap<>();
-	private HashMap<Button, Item> availButtonToItem = new HashMap<>();
-	
-	//Metode som kj�res automatisk ved oppstart (fordi den heter initialize)
-	@FXML
-	public void initialize() {
-		shopping = new Shopping();
+	//This method is executed automatically when the app starts
+	@FXML public void initialize() {
 		updateBalanceText();
-		generateItemButtons();
-		updateCartButtons();
-		
-		//Setter total-tekstfeltet f�rst av alle elementer for � gj�re det synlig
+		initButtons();
 		total.toFront();	
 	}
 	
-	//Genererer knapper for tilgjengelige varer/Items
-	public void generateItemButtons() {
-		//Generer knapper for hver tilgjengelige Item i angitte x- og y-koordinater
-		for (Item item : shopping.getAvailableItems()) {
-			generateItemButton(item, availX, availY);	
+	//addToCart is executed when a button in the availablePane is clicked
+	@FXML public void addToCart(ActionEvent event) {
+		Button availBtn = (Button) event.getSource();
+		Item item = availButtonToItem.get(availBtn);
+		Button cartBtn = itemToCartButton.get(item);
+		shopping.addNToCart(item, 1);
+		cartBtn.setText(item.toString());
+		updateBalanceText();
+		cartBtn.setStyle("-fx-background-color: #b5ffb8; -fx-border-color: darkgray; -fx-border-width: 1;");
+		save();
+	}
+	
+	//removeFromCart is executed when a button in the cartPane is clicked.
+	@FXML public void removeFromCart(ActionEvent event) {
+		Button cartBtn = (Button) event.getSource();
+		Item item = cartButtonToItem.get(cartBtn);
+		shopping.removeFromCart(item);
+		cartBtn.setText(item.toString());
+		updateBalanceText();
+		cartBtn.setStyle("");
+		save();
+	}
+	
+	//Method to map items to buttons
+	public void initButtons() {
+		int counter = 0;
+		Item item = shopping.getAvailableItem(counter);
+		while (item != null) {
 			
-			//Oppdaterer hvilke koordinater som er ledige
-			this.availX += 69;
-			if (availX >= 269) {
-				this.availX = 0;
-				this.availY += 69;
+			//Checks if item is in shopping-cart, and makes item point to the cart item if it is
+			Item cartItem = shopping.findItem(item);
+			String style = "";
+			if (cartItem != null) {
+				item = cartItem;
+				style = "-fx-background-color: #b5ffb8; -fx-border-color: darkgray; -fx-border-width: 1;";
 			}
+			
+			Button availBtn = (Button) availablePane.getChildren().get(counter);
+			availBtn.setText(item.getName() + "\n" + item.getPrice() + ",-");
+			availButtonToItem.put(availBtn, item);
+			
+			Button cartBtn = (Button) cartPane.getChildren().get(counter);
+			cartButtonToItem.put(cartBtn, item);
+			itemToCartButton.put(item, cartBtn);
+			cartBtn.setText(item.toString());
+			cartBtn.setStyle(style);
+			
+			counter++;
+			item = shopping.getAvailableItem(counter);
 		}
-		save();
 	}
 	
-	//Genererer �n knapp for angitt Item-objekt og koordinater
-	public void generateItemButton(Item item, int x, int y) {
-		String btnText = item.getName() + "\n" + String.valueOf(item.getPrice()) + ",-";
-		Button btn = new Button(btnText);
-		
-		//Angir hvor p� brukergrensesnittet knappen skal v�re og hvor stor den er
-		btn.setLayoutX(x);
-	    btn.setLayoutY(y);
-	    btn.setMinWidth(69);
-	    btn.setMinHeight(69);
-	    btn.setMaxWidth(69);
-	    btn.setMaxHeight(69);
-	    
-	    //Setter oppf�rsel for knappen n�r man har pekeren over knappen (endrer tekst)
-	    btn.hoverProperty().addListener((ov, oldValue, newValue) -> {
-	        if (newValue) {
-	            btn.setText("Legg i\nkurv");
-	            btn.setCursor(Cursor.HAND);
-	        } else {
-	            btn.setText(btnText);
-	        }
-	    });
-	    availButtonToItem.put(btn, item);		//Mapper Button til Item i HashMap
-	    availablePane.getChildren().add(btn);		//Legger knappen til i brukergrensesnittet'
-	    
-	    //Setter hva som skal skje n�r knappen trykkes p�
-	    btn.setOnAction(new EventHandler<ActionEvent>() {
-	        @Override public void handle(ActionEvent e) {
-	        	Button btn = ((Button)e.getSource());			//Henter knappen som har blitt trykket
-	        	Item item = availButtonToItem.get(btn);
-				shopping.addToCart(item);			//Oppdaterer modellen (shopping-objektet)
-				updateCartButtons();
-				total.setText(String.valueOf("Total: " + shopping.getCartTotal() + ",-"));
-	        }
-	    });
-	}
-	
-	//Fjerner alle knapper og legger dem til p� nytt slik at man ikke f�r hull n�r man fjerner en knapp
-	public void updateCartButtons() {
-		cartPane.getChildren().clear();
-		cartButtonToItem.clear();
-		this.cartX = 0;
-		this.cartY = 0;
-		for (Item item : shopping.getCart()) {
-			generateCartButton(item, cartX, cartY);
-			this.cartX += 69;
-			if (cartX >= 269) {
-				this.cartX = 0;
-				this.cartY += 69;
-			}
-		}
-		save();
-	}
-	
-	//Genererer Buttons for Items som er i handlekurven
-	public void generateCartButton(Item item, int x, int y) {
-		String btnText = String.valueOf(item.getQuanity()) + " " + item.getName() + "\n" + String.valueOf(item.getTotalPrice()) + ",-";
-		Button btn = new Button(btnText);
-		btn.setLayoutX(x);
-	    btn.setLayoutY(y);
-	    btn.setMinWidth(69);
-	    btn.setMinHeight(69);
-	    btn.setMaxWidth(69);
-	    btn.setMaxHeight(69);
-	    cartButtonToItem.put(btn, item);
-	    btn.hoverProperty().addListener((ov, oldValue, newValue) -> {
-	        if (newValue) {
-	            btn.setText("Fjern fra\nkurv");
-	            btn.setCursor(Cursor.HAND);
-	        } else {
-	            btn.setText(btnText);
-	        }
-	    });
-	    cartPane.getChildren().add(btn);
-	    btn.setOnAction(new EventHandler<ActionEvent>() {
-	        @Override public void handle(ActionEvent e) {
-	        	Button btn = ((Button)e.getSource());
-				Item item = cartButtonToItem.get(btn);
-				shopping.removeFromCart(item);
-				updateBalanceText();
-	        	updateCartButtons();
-	        }
-	    });
-	}
-	
-	//Endrer teksten for verdien av handlekurven
+	//Updates the total-textfield with the cart total
 	private void updateBalanceText() {
 		total.setText(String.valueOf("Total: " + shopping.getCartTotal() + ",-"));
-		save();
 	}
 	
-	//Lagrer tilstand
-	public void save() {
+	//Method for saving state
+	private void save() {
 		shopping.saveState();
-		shopping.saveItems();
-	}
-	
-	//Legger til tilgjengelig vare
-	@FXML public void addAvailable() {
-		var itemName = nameNew.getText();
-		
-		//Validerer at tekstfeltet har blitt skrevet i
-		if (itemName.length() == 0) {
-			toggleView();
-			throw new IllegalArgumentException("Navnefelt mangler verdi");
-		}
-		var itemPrice = priceNew.getText();
-		
-		//Legger til Item-objekt i kurv, og utl�ser unntak om pris-feltet ikke inneholder gyldig heltall
-		try {
-			Item item = new Item(itemName, Integer.valueOf(itemPrice));
-			shopping.addAvailableItem(item);
-			generateItemButton(item, this.availX, this.availY);
-			toggleView();
-			save();
-		} catch (NumberFormatException e) {
-			toggleView();
-			throw new NumberFormatException("Ugyldig heltall: " + itemPrice);
-		}
-		
-		//Fjerner tekst fra tekstfelt n�r Item er lagt til i tilgjengelige varer
-		nameNew.setText("");
-		priceNew.setText("");
-	}
-	
-	//Endrer hva som er synlig og mulig � trykke p�
-	@FXML public void toggleView() {
-		if (!newPane.isVisible()) {
-			newPane.setVisible(true);
-			newPane.toFront();
-			
-			//forEach g�r gjennom hvert element (her (key, value)-par) i listen den kalles p�
-			cartButtonToItem.forEach((key, value) -> key.setDisable(true));
-			availButtonToItem.forEach((key, value) -> key.setDisable(true));
-		} else {
-			newPane.setVisible(false);
-			newPane.toBack();
-			cartButtonToItem.forEach((key, value) -> key.setDisable(false));
-			availButtonToItem.forEach((key, value) -> key.setDisable(false));
-		}
 	}
 	
 }
