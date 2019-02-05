@@ -14,6 +14,8 @@ import javafx.scene.shape.Rectangle;
 
 public class ChessController {
 
+	private Chess chess = new Chess();
+
 	@FXML private Label a1, a2, a3, a4, a5, a6, a7, a8;
 	@FXML private Label b1, b2, b3, b4, b5, b6, b7, b8;
 	@FXML private Label c1, c2, c3, c4, c5, c6, c7, c8;
@@ -38,23 +40,15 @@ public class ChessController {
 	
 	private Map<Character, Character> whiteSymbols = new HashMap<>(), blackSymbols = new HashMap<>();
 
-	private Chess chess;
-	
+	private static String unicodeSymbols = "R♜♖N♞♘B♝♗Q♛♕K♚♔P♟♙";
+
 	@FXML
 	void initialize() {
-		blackSymbols.put('R', '♜');
-		blackSymbols.put('N', '♞');
-		blackSymbols.put('B', '♝');
-		blackSymbols.put('Q', '♛');
-		blackSymbols.put('K', '♚');
-		blackSymbols.put('P', '♟');
-
-		whiteSymbols.put('R', '♖');
-		whiteSymbols.put('N', '♘');
-		whiteSymbols.put('B', '♗');
-		whiteSymbols.put('Q', '♕');
-		whiteSymbols.put('K', '♔');
-		whiteSymbols.put('P', '♙');
+		for (var i = 0; i < unicodeSymbols.length(); i += 3) {
+			var pieceKind = unicodeSymbols.charAt(i);
+			blackSymbols.put(pieceKind, unicodeSymbols.charAt(i + 1));
+			whiteSymbols.put(pieceKind, unicodeSymbols.charAt(i + 2));
+		}
 
 		allLabels = List.of(
 				a1, a2, a3, a4, a5, a6, a7, a8,

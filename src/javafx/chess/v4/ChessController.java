@@ -38,7 +38,6 @@ public class ChessController {
 	
 	private Map<Character, Character> whiteSymbols = new HashMap<>(), blackSymbols = new HashMap<>();
 
-	
 	private static String unicodeSymbols = "R♜♖N♞♘B♝♗Q♛♕K♚♔P♟♙";
 
 	@FXML

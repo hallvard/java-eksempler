@@ -19,6 +19,7 @@ Det som er mest kinkig er å lagre alle relevant data om handlingen, slik at den
 ## Endringer i Chess
 
 Chess-klassen utvides med metoder tilsvarende bruker-funksjonene undo og redo, slik at kontrolleren kan kalles disse nokså direkte. Vi har også lagt til metoder som sier om disse funksjonene er tilgjengelige (kan kalles), da disse trengs for aktivering/deaktivering av funksjonene i GUI-et. En kan argumentere med at Chess da blir litt UI-spesifikk, men på den annen side blir det bedre innkapslingsmessig.
+Til slutt gjør vi en liten forenkling: Siden undo-stacken i praksis er en liste over trekkene som er gjort, så kan vi *beregne* hvem sin tur det er, i stedet for å lagre det (i **whitesTurn**).  
 
 ### undo
 
