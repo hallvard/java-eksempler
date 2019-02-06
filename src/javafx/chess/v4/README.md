@@ -28,3 +28,13 @@ Løsningen er todelt:
 2. Vi har allerede en liste av **Label**-objekter i en egnet rekkefølge, og lager oss en tilsvarende for **Rectangle**-objektene som tilsvarer rutene. Posisjonen i lista hvor vi finner objektet som ble klikket på, kan brukes til å beregne både kolonnen og raden til ruta. Logikken blir den motsatte av den som brukes i **updateBoar**-metoden for å finne **Label**-objektet for en gitt brikke.
 
 Når en har funnet rute-koordinatene så kan en legge dem inn i det tilsvarende innfyllingsfeltet, klikket blir på en måte en svarvei for å fylle det inn. Klikker man på en av brikkene til den som har turen, så registreres hvilken brikke som er valgt vha. **setSelectedPiece**-metoden. **updateBoard**-metoden er oppdatert til å endre bakgrunnsfargen til brikken som er valgt. Hvis en klikker på en motstander-brikke (eller en rute), så oppdateres til-feltet og trekket utføres (om det er lovlig).
+
+### Visuelle effekter og CSS
+
+Vanligvis endres visuelle effekter ved å endre spesifikke egenskaper vha. set-metoder. F.eks. kan skriftstypen til en **Label** endres ved å kalle **setFont**-metoden. Bakgrunnsfargen til en **Label** settes imidlertid vha. en generell *styling*-mekanisme ala den som brukes med HTML og kalles [CSS](https://en.wikipedia.org/wiki/Cascading_Style_Sheets). Bakgrunnsfargen til en spesifikk **Label** angis vha. **-fx-backgroundcolor**-stilen slik:
+
+```java
+label.setStyle("-fx-background-color: #c8c4e3;");
+```
+
+En bygger altså opp en **String** på et bestemt format og kaller **setStyle**. Flere egenskaper kan settes ved å legge dem etter hverandre. En kan også lage stilregler som knyttes til et helt panel, vindu eller FXML-fil, slik en gjør med HTML. Les mer om [hvordan dette fungerer](https://docs.oracle.com/javafx/2/css_tutorial/jfxpub-css_tutorial.htm) og om [hvilke visuelle egenskaper som kan settes på denne måten](https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html). 
