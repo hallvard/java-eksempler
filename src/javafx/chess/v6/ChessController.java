@@ -89,29 +89,10 @@ public class ChessController {
 	private void setSelectedPiece(Piece piece) {
 		selectedPiece = piece;
 		moveField.setText("");
+		highlightSquares(piece, "green", "red");
 		updateBoard();
 	}
 
-	private Map<Piece, String> highlightedPieces = new HashMap<>();
-	
-	private void highlightPiece(Piece piece, String color) {
-		highlightedPieces.put(piece, color);
-	}
-	
-	private void clearHightlightedPieces() {
-		highlightedPieces.clear();
-	}
-
-	private Map<String, String> highlightedSquares = new HashMap<>();
-	
-	private void highlightSquare(char line, int row, String color) {
-		highlightedSquares.put("" + line + row, color);
-	}
-	
-	private void clearHightlightedSquares() {
-		highlightedSquares.clear();
-	}
-	
 	private void updateBoard() {
 		for (var label : allLabels) {
 			label.setText("");
@@ -171,8 +152,6 @@ public class ChessController {
 			messageLabel.setText(e.getMessage());
 		}
 		setSelectedPiece(null);
-		clearHightlightedPieces();
-		clearHightlightedSquares();
 		updateAll();
 	}
 
@@ -201,26 +180,26 @@ public class ChessController {
 		if (piece != null) {
 			if (piece.isWhite() == chess.isWhitesTurn()) {
 				setSelectedPiece(piece);
-				highlightSquares(piece, "green", "red");
-				updateBoard();
 			} else if (selectedPiece != null) {
 				handleMove(selectedPiece, line, row);
 			}
 		}
 	}
-
+	
+	private Map<Piece, String> highlightedPieces = new HashMap<>();
+	private Map<String, String> highlightedSquares = new HashMap<>();
+	
 	private void highlightSquares(Piece piece, String moveColor, String attackColor) {
-		clearHightlightedPieces();
-		clearHightlightedSquares();
+		highlightedPieces.clear();
+		highlightedSquares.clear();
 		for (var line = 'a'; line <= 'h'; line++) {
 			for (var row = 1; row <= 8; row++) {
 				if (chess.canMove(piece, line, row)) {
 					var other = chess.findPieceAt(line, row);
-//					System.out.println(piece + " can move to " + line + row + " and attack " + other);
 					if (attackColor != null && other != null) {
-						highlightPiece(other, attackColor);
+						highlightedPieces.put(other, attackColor);
 					} else if (moveColor != null && other == null) {
-						highlightSquare(line, row, moveColor);
+						highlightedSquares.put("" + line + row, moveColor);
 					}
 				}
 			}
