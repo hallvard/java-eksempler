@@ -18,17 +18,18 @@ public class Cart {
 			cart.add(item);
 			item.setQuantity(n);
 		} else {
-			var newQty = cartItem.getQuanity() + n;
-			item.setQuantity(newQty);
+			int newQty = cartItem.getQuanity() + n;
+			cartItem.setQuantity(newQty);
 		}
 	}
 	
-	public void removeFromCart(Item item) {
-		if (findItem(item) == null) {
+	public void removeAllFromCart(Item item) {
+		Item cartItem = findItem(item);
+		if (findItem(cartItem) == null) {
 			throw new IllegalArgumentException(item.getName() + " not in cart");
 		} else {
-			item.setQuantity(0);
-			cart.remove(item);
+			cartItem.setQuantity(0);
+			cart.remove(cartItem);
 		}
 	}
 	

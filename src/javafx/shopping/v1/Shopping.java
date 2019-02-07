@@ -41,8 +41,12 @@ public class Shopping {
 	}
 	
 	public Item getAvailableItem(int index) {
-		if (index >= availableItems.size()) return null;
+		if (index >= availableItems.size()) throw new IndexOutOfBoundsException("Index: " + index + ", size of availableItems: " + availableItems.size());
 		return availableItems.get(index);
+	}
+	
+	public int getAvailableItemsSize() {
+		return this.availableItems.size();
 	}
 	
 	public void addNToCart(Item item, int n) {
@@ -50,7 +54,7 @@ public class Shopping {
 	}
 	
 	public void removeFromCart(Item item) {
-		this.cart.removeFromCart(item);
+		this.cart.removeAllFromCart(item);
 	}
 	
 	public Item findItem(Item item) {

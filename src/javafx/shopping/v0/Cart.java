@@ -7,23 +7,24 @@ public class Cart {
 	
 	private List<Item> cart = new ArrayList<>();
 	
-	public void addOneToCart(Item item) {
+	public void addNToCart(Item item, int n) {
 		Item cartItem = findItem(item);
 		if (cartItem == null) {
 			cart.add(item);
-			item.setQuantity(1);
+			item.setQuantity(n);
 		} else {
-			var newQty = cartItem.getQuanity() + 1;
-			item.setQuantity(newQty);
+			int newQty = cartItem.getQuanity() + n;
+			cartItem.setQuantity(newQty);
 		}
 	}
 	
-	public void removeFromCart(Item item) {
-		if (findItem(item) == null) {
+	public void removeAllFromCart(Item item) {
+		Item cartItem = findItem(item);
+		if (findItem(cartItem) == null) {
 			throw new IllegalArgumentException(item.getName() + " not in cart");
 		} else {
-			item.setQuantity(0);
-			cart.remove(item);
+			cartItem.setQuantity(0);
+			cart.remove(cartItem);
 		}
 	}
 	

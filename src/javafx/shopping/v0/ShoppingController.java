@@ -53,20 +53,19 @@ public class ShoppingController {
 	
 	//Method to map items to buttons
 	public void initButtons() {
-		int counter = 0;
-		Item item = shopping.getAvailableItem(counter);
-		while (item != null) {
-			Button availBtn = (Button) availablePane.getChildren().get(counter);
+		int availableItemsSize = shopping.getAvailableItemsSize();
+		for (int i = 0; i < availableItemsSize; i++) {
+			Item item = shopping.getAvailableItem(i);
+			Button availBtn = (Button) availablePane.getChildren().get(i);
 			availBtn.setText(item.getName() + "\n" + item.getPrice() + ",-");
 			availButtonToItem.put(availBtn, item);
 			
-			Button cartBtn = (Button) cartPane.getChildren().get(counter);
+			Button cartBtn = (Button) cartPane.getChildren().get(i);
 			cartBtn.setText(item.toString());
 			cartButtonToItem.put(cartBtn, item);
 			itemToCartButton.put(item, cartBtn);
 			
-			counter++;
-			item = shopping.getAvailableItem(counter);
+			item = shopping.getAvailableItem(i);
 		}
 	}
 	
