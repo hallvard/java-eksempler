@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.shopping.v1.ShoppingController">
+   <children>
+      <Pane prefHeight="495.0" prefWidth="560.0">
+         <children>
+            <Text fx:id="welcomeText" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Handlekurv-app" textAlignment="CENTER" wrappingWidth="560.0000000081491">
+               <font>
+                  <Font size="38.0" />
+               </font>
+            </Text>
+            <Text fx:id="total" layoutX="450.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="100.0" />
+            <TitledPane animated="false" collapsible="false" layoutY="80.0" prefHeight="413.0" prefWidth="280.0" text="Tilgjengelige varer">
+              <content>
+                <AnchorPane fx:id="availablePane" minHeight="0.0" minWidth="0.0" prefHeight="387.0" prefWidth="280.0">
+                     <children>
+                        <Button fx:id="availBtn1" layoutX="-1.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button fx:id="availBtn2" layoutX="69.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button fx:id="availBtn3" layoutX="139.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button fx:id="availBtn3" layoutX="209.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button fx:id="availBtn5" layoutX="-1.0" layoutY="70.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="69.0" layoutY="70.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="139.0" layoutY="70.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="209.0" layoutY="70.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="-1.0" layoutY="140.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="69.0" layoutY="140.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="139.0" layoutY="140.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="209.0" layoutY="140.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="-1.0" layoutY="210.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="69.0" layoutY="210.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="139.0" layoutY="210.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="209.0" layoutY="210.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                     </children></AnchorPane>
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" collapsible="false" layoutX="280.0" layoutY="80.0" prefHeight="413.0" prefWidth="280.0" text="I handlekurv">
+               <content>
+                  <AnchorPane fx:id="cartPane" minHeight="0.0" minWidth="0.0" prefHeight="387.0" prefWidth="280.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="70.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="140.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="210.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutY="70.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="70.0" layoutY="70.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="140.0" layoutY="70.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="210.0" layoutY="70.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutY="140.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="70.0" layoutY="140.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="140.0" layoutY="140.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="210.0" layoutY="140.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutY="210.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="70.0" layoutY="210.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="140.0" layoutY="210.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                        <Button layoutX="210.0" layoutY="210.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="70.0" prefWidth="70.0" text="Button" />
+                     </children></AnchorPane>
+               </content>
+            </TitledPane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
