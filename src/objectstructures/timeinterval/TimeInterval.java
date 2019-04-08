@@ -2,8 +2,10 @@ package objectstructures.timeinterval;
 
 public class TimeInterval {
 
+	// tag::variables[]
 	private TimePoint start;
 	private TimePoint end;
+	// end::variables[]
 
 	public TimeInterval(int startHour, int startMin, int endHour, int endMin) {
 		checkInt(startHour, 0, 24);
@@ -18,15 +20,16 @@ public class TimeInterval {
 		return String.format("[TimeInterval %02d:%02d-%02d:%02d]", getStartHour(), getStartMinutes(), getEndHour(), getEndMinutes());
 	}
 	
-	public int getStartHour() {
-		return start.getHour();
-	}
-
 	// hjelpemetode for å sjekke om et tall er i riktig intervall
 	private void checkInt(int i, int min, int max) {
 		if (i < min || i >= max) {
 			throw new IllegalArgumentException(String.format("%d isn't between %d (inclusive) and %d (exclusive)", i, min, max));
 		}
+	}
+
+	// tag::startHour-methods[]
+	public int getStartHour() {
+		return start.getHour();
 	}
 
 	public void setStartHour(int hour) {
@@ -40,6 +43,7 @@ public class TimeInterval {
 		// juster endHour og endMin vha. setIntervalLength
 		setIntervalLength(intervalLength);;
 	}
+	// end::startHour-methods[]
 
 	public int getStartMinutes() {
 		return start.getMinutes();
@@ -96,6 +100,7 @@ public class TimeInterval {
 
 	//
 
+	// tag::main-method[]
 	public static void main(String[] args) {
 		TimeInterval ti = new TimeInterval(12, 15, 14, 0);
 		System.out.println(ti);
@@ -111,4 +116,5 @@ public class TimeInterval {
 		}
 		System.out.println(ti);
 	}
+	// end::main-method[]
 }

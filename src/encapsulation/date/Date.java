@@ -2,11 +2,11 @@ package encapsulation.date;
 
 public class Date {
 
-	// tag::variabler[]
+	// tag::variables[]
 	private int year;  // ingen begrensninger
 	private int month; // 1 til (og med) 12
 	private int day;   // 1 til (og med) antall dager i måneden
-	// end::variabler[]
+	// end::variables[]
 	
 	// tag::constructor[]
 	public Date(int year, int month, int day) {

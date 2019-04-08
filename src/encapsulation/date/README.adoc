@@ -26,7 +26,7 @@ Vi bestemmer oss først for hvordan tilstanden skal representeres i form av vari
 
 [source, java]
 ----
-include::Date.java[tag=variabler]
+include::Date.java[tag=variables]
 ----
 
 `month`-variablen må altså begrenses til tallene 1-12, og gyldig verdiområde for `day` er avhengig av både måneden og året (pga. skuddår).

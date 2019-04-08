@@ -2,8 +2,10 @@ package encapsulation.timeinterval;
 
 public class TimeInterval3 {
 
+	// tag::variables[]
 	private int start;
 	private int end;
+	// end::variables[]
 
 	public TimeInterval3(int startHour, int startMin, int endHour, int endMin) {
 		checkInt(startHour, 0, 24);

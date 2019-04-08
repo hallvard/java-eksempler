@@ -19,7 +19,8 @@ Siden vi skal lage to varianter, så kaller klassene våre `Person1` og `Person2
 
 ==== Lese- og endringsmetoder
 
-I motsetning til i <<../date/Date.adoc#, Date-eksemplet>> så starter vi med å bestemme lese- og endringsmetodene. Det skal gå an å lese og endre for- og etternavn for seg, samt lese og endre det fulle navnet. Det fulle navnet er definert som for- og etternavn skilt med mellomrom, og hvis ett eller begge ikke er satt, så brukes "?" i stedet for delnavnet. Her er deklarasjonene:
+I motsetning til i <<../date/Date.adoc#, Date-eksemplet>> så starter vi med å bestemme lese- og endringsmetodene. Det skal gå an å lese og endre for- og etternavn for seg, samt lese og endre det fulle navnet.
+Det fulle navnet er definert som for- og etternavn skilt med mellomrom, og hvis ett eller begge ikke er satt, så brukes "?" i stedet for delnavnet. Her er deklarasjonene:
 
 [source, java]
 ----
@@ -47,21 +48,7 @@ Vi definerer at navn bare kan inneholde bokstaver, punktum og bindestrek. Et for
 
 [source, java]
 ----
-public boolean isValidName(String name, boolean allowBlank) {
-   for (int i = 0; i < name.length(); i++) {
-      char c = name.charAt(i);
-      if (! (Character.isLetter(c) || (c == ' ' && allowBlank) || ".-".indexOf(c) >= 0)) {
-         return false;
-      }
-   }
-   return true;
-}
-	
-private void checkName(String name, boolean allowBlank) {
-   if (! isValidName(name, allowBlank)) {
-      throw new IllegalArgumentException("Illegal character(s) in name: " + name);
-   }
-}
+include::Person1.java[tag=validation-methods]
 ----
 
 Vi har her valgt å deklarere `isValidName` som `public`, slik at andre klasser kan forhåndssjekke navn,
@@ -74,8 +61,7 @@ Variant 1 bruker to variabler for tilstanden, én for fornavn og én for etterna
 
 [source, java]
 ----
-private String givenName;
-private String familyName;
+include::Person1.java[tag=variables]
 ----
 
 Lese- og endringsmetodene for for- og etternavn blir trivielle, siden lesemetoden kan returnere variabelverdiene direkte,
@@ -83,23 +69,7 @@ og endringsmetodene kan sette tilsvarende variabel, etter å ha validert argumen
 
 [source, java]
 ----
-public String getGivenName() {
-   return givenName;
-}
-
-public void setGivenName(String givenName) {
-   checkName(givenName, true);
-   this.givenName = givenName;
-}
-	
-public String getFamilyName() {
-   return familyName;
-}
-
-public void setFamilyName(String familyName) {
-   checkName(familyName, false);
-   this.familyName = familyName;
-}
+include::Person1.java[tags=givenName-methods;familyName-methods]
 ----
 
 De siste to lese- og endringsmetodene blir litt mer kompliserte,
@@ -107,32 +77,7 @@ siden de må henholdsvis sette sammen og splitte tekstverdier og ta høyde for t
 
 [source, java]
 ----
-public String getFullName() {
-   String gn = givenName;
-   if (gn == null) { // <1>
-      gn = "?";
-   };
-   String fn = familyName;
-   if (fn == null) { // <1>
-      fn = "?";
-   };
-   return gn + " " + fn;
-}
-
-public void setFullName(String fullName) {
-   checkName(fullName, true);
-   int pos = fullName.lastIndexOf(' '); // <2>
-   String gn = fullName.substring(0, pos); // <3>
-   if (gn.equals("?")) { // <4>
-      gn = null;
-   }
-   String fn = fullName.substring(pos + 1); // <3>
-   if (fn.equals("?")) {  // <4>
-      fn = null;
-   }
-   this.givenName = gn;
-   this.familyName = fn;
-}
+include::Person1.java[tag=fullName-methods]
 ----
 
 <1> Hvis fornavn eller etternavn ikke er satt, bruk "?" i stedet.
@@ -146,7 +91,7 @@ Variant 2 bruker én variabel for tilstanden, som lagrer det fulle navnet:
 
 [source, java]
 ----
-private String fullName;
+include::Person2.java[tag=variables]
 ----
 Som over, brukes "?" i stedet for for- og etternavn som ikke er oppgitt. "? ?" tilsvarer altså et helt tomt navn.
 
@@ -154,57 +99,14 @@ I denne varianten er det lese- og endringsmetodene til det fulle navnet som blir
 
 [source, java]
 ----
-public String getFullName() {
-   return fullName;
-}
-
-public void setFullName(String fullName) {
-   checkName(fullName, true);
-   this.fullName = fullName;
-}
+include::Person2.java[tag=fullName-methods]
 ----
 
 De to andre parene av lese- og endringsmetoder blir tilsvarende mer kompliserte:
 
 [source, java]
 ----
-public String getGivenName() {
-   int pos = fullName.lastIndexOf(' '); // <1>
-   String gn = fullName.substring(0, pos); // <2>
-   if (gn.equals("?")) { // <3>
-      gn = null;
-   }
-   return gn;
-}
-	
-public void setGivenName(String givenName) {
-   checkName(givenName, true);
-   if (givenName == null) { // <4>
-      givenName = "?";
-   }
-   int pos = fullName.lastIndexOf(' '); // <1>
-   String familyName = fullName.substring(pos + 1); // <5>
-   this.fullName = givenName + " " + familyName;
-}
-	
-public String getFamilyName() {
-   int pos = fullName.lastIndexOf(' '); // <1>
-   String fn = fullName.substring(pos + 1); // <5>
-   if (fn.equals("?")) { // <3>
-      fn = null;
-   }
-   return fn;
-}
-
-public void setFamilyName(String familyName) {
-   checkName(familyName, false);
-   if (familyName == null) { // <4>
-      familyName = "?";
-   }
-   int pos = fullName.lastIndexOf(' '); // <1>
-   String givenName = fullName.substring(0, pos); // <2>
-   this.fullName = givenName + " " + familyName;
-}
+include::Person2.java[tags=givenName-methods;familyName-methods]
 ----
 
 <1> Finn posisjonen til bakerste mellomrom.
@@ -216,22 +118,17 @@ public void setFamilyName(String familyName) {
 
 ==== Testing med main-metoden
 
-Det er alltid lurt å teste koden ved å opprette objekter, drive dem gjennom diverse tilstander og sjekke at lesemetodene gir forventet resultat. I `main`-metoden under så tester vi spesifikt (den forventede) sammenhengen mellom for- og etternavn og fullt navn. Siden forskjellen mellom Person1- og Person2-klassene er hvordan tilstand er representert og ikke oppførselen til `public`-metoder, så kan `main`-metodene faktisk være like! Selvsagt med unntak av hvilken klasse som instansieres.
+Det er alltid lurt å teste koden ved å opprette objekter, drive dem gjennom diverse tilstander og sjekke at lesemetodene gir forventet resultat.
+I `main`-metoden under så tester vi spesifikt (den forventede) sammenhengen mellom for- og etternavn og fullt navn.
+Siden forskjellen mellom `Person1`- og `Person2`-klassene er hvordan tilstand er representert og ikke oppførselen til `public`-metodene,
+så kan `main`-metodene faktisk være like! Selvsagt med unntak av hvilken klasse som instansieres.
 
 [source, java]
 ----
-public static void main(String[] args) {
-   Person2 p1 = new Person2();
-   p1.setGivenName("Hallvard");
-   p1.setFamilyName("Trætteberg");
-   System.out.println(p1.getGivenName() + " " + p1.getFamilyName() + " == " + p1.getFullName());
-   Person2 p2 = new Person2();
-   p2.setFullName("Hallvard Trætteberg");
-   System.out.println(p2.getGivenName() + " " + p2.getFamilyName() + " == " + p2.getFullName());
-}
+include::Person2.java[tag=main-method]
 ----
 
-Her er objekttilstandsdiagram `Person1`-klassen:
+Her er objekttilstandsdiagram for `Person1`-klassen:
 
 [plantuml]
 ----

@@ -2,11 +2,14 @@ package encapsulation.timeinterval;
 
 public class TimeInterval1 {
 
+	// tag::variables[]
 	private int startHour;
 	private int startMin;
 	private int endHour;
 	private int endMin;
+	// end::variables[]
 
+	// tag::constructor[]
 	public TimeInterval1(int startHour, int startMin, int endHour, int endMin) {
 		checkInt(startHour, 0, 24);
 		checkInt(startMin, 0, 60);
@@ -16,12 +19,16 @@ public class TimeInterval1 {
 		this.endHour = endHour;
 		this.endMin = endMin;
 	}
+	// end::constructor[]
 
+	// tag::toString-method[]
 	@Override
 	public String toString() {
 		return String.format("[TimeInterval1 %02d:%02d-%02d:%02d]", getStartHour(), getStartMinutes(), getEndHour(), getEndMinutes());
 	}
+	// end::toString-method[]
 	
+	// tag::methods[]
 	public int getStartHour() {
 		return startHour;
 	}
@@ -97,9 +104,11 @@ public class TimeInterval1 {
 		endHour = startHour + (startMin + minutes) / 60;
 		endMin = (startMin + minutes) % 60;		
 	}
+	// end::methods[]
 
 	//
 
+	// tag::main-method[]
 	public static void main(String[] args) {
 		TimeInterval1 ti = new TimeInterval1(12, 15, 14, 0);
 		System.out.println(ti);
@@ -115,4 +124,5 @@ public class TimeInterval1 {
 		}
 		System.out.println(ti);
 	}
+	// end::main-method[]
 }

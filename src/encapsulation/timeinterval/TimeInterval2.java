@@ -2,10 +2,13 @@ package encapsulation.timeinterval;
 
 public class TimeInterval2 {
 
+	// tag::variables[]
 	private int startHour;
 	private int startMin;
 	private int intervalLength;
+	// end::variables[]
 
+	// tag::constructor[]
 	public TimeInterval2(int startHour, int startMin, int endHour, int endMin) {
 		checkInt(startHour, 0, 24);
 		checkInt(startMin, 0, 60);
@@ -14,6 +17,7 @@ public class TimeInterval2 {
 		this.startMin = startMin;
 		this.intervalLength = minutes(startHour, startMin, endHour, endMin);
 	}
+	// end::constructor[]
 
 	@Override
 	public String toString() {
@@ -58,7 +62,16 @@ public class TimeInterval2 {
 		// juster endHour og endMin vha. setIntervalLength
 		setIntervalLength(intervalLength);;
 	}
+	
+	private int minutes(int hour, int min) {
+		return hour * 60 + min;
+	}
+	
+	private int minutes(int startHour, int startMin, int endHour, int endMin) {
+		return minutes(endHour, endMin) - minutes(startHour, startMin);
+	}
 
+	// tag::end-methods[]
 	public int getEndHour() {
 		return startHour + (startMin + intervalLength) / 60;
 	}
@@ -71,18 +84,12 @@ public class TimeInterval2 {
 		return (startMin + intervalLength) % 60;
 	}
 
-	private int minutes(int hour, int min) {
-		return hour * 60 + min;
-	}
-	
-	private int minutes(int startHour, int startMin, int endHour, int endMin) {
-		return minutes(endHour, endMin) - minutes(startHour, startMin);
-	}
-
 	public void setEndMinutes(int minutes) {
 		setIntervalLength(minutes(startHour, startMin, getEndHour(), minutes));
 	}
+	// end::end-methods[]
 
+	// start::interval-methods[]
 	public int getIntervalLength() {
 		return intervalLength;
 	}
@@ -92,9 +99,11 @@ public class TimeInterval2 {
 		checkInt(minutes, 0, 24 * 60 - minutes(startHour, startMin));
 		intervalLength = minutes;
 	}
+	// end::interval-methods[]
 
 	//
 
+	// tag::main-method[]
 	public static void main(String[] args) {
 		TimeInterval2 ti = new TimeInterval2(12, 15, 14, 0);
 		System.out.println(ti);
@@ -110,4 +119,5 @@ public class TimeInterval2 {
 		}
 		System.out.println(ti);
 	}
+	// end::main-method[]
 }
