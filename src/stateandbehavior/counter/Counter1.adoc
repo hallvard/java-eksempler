@@ -1,0 +1,280 @@
+== Counter1
+
+Dette eksemplet er ment å introdusere enkle objekter og klasser og tilhørende Java-syntaks.
+
+=== Objekt-utforming
+
+Vi ønsker oss et objekt som holder rede på en heltallsteller, som skal løpe fra en _startverdi_ til en _sluttverdi_.
+Objektet skal la oss
+
+- lese teller-verdien,
+- øke verdien med 1 (hvis sluttverdien ikke er nådd) og
+- sjekke om sluttverdien er nådd.
+
+Når vi skal utforme (bestemme logikken til) objektet, må vi stille oss noen grunnleggende spørsmål:
+
+- Hva må en kunne spørre objektet om?
+- Hvilke operasjoner må en kunne utføre på dataene?
+- Hva må objektet huske (på av data) for å kunne oppføre seg riktig?
+- Hvilke data må oppgis når objektet opprettes/starter?
+
+For vårt teller-objekt er en mulighet som følger:
+
+- **Hva må en kunne spørre objektet om?** +
+I beskrivelsen over står det at en må kunne _lese_ teller-verdien og _sjekke_ om sluttverdien er nådd.
+- **Hvilke operasjoner må en kunne utføre på dataene?** +
+Vi trenger kun én operasjon som endrer dataene, den som _øker_ telleren med én.
+- **Hva må objektet huske (på av data) for å kunne oppføre seg riktig?** +
+Teller-objektet må huske _teller-verdien_ (et heltall) og den _øvre grensen_ (også et heltall).
+- **Hvilke data må oppgis når objektet opprettes/starter?** +
+Når teller-objektet opprettes, så må en oppgi _start-verdien_ og den _øvre grensen_.
+
+Når vi har tenkt gjennom dette, så kan vi begynne å kode!
+
+=== Koding
+
+Svaret på spørsmålene over gir oss grovstrukturen til koden nokså direkte:
+
+- **Hva må en kunne spørre objektet om?** +
+Hvert spørsmål en skal kunne stille objektet tilsvarer en _lesemetode_.
+- **Hvilke operasjoner må en kunne utføre på dataene?** +
+Hver operasjon tilsvarer en _endringsmetode_.
+- **Hva må objektet huske (på av data) for å kunne oppføre seg riktig?** +
+Hvert stykke data blir til en _variabel_.
+- **Hvilke data må oppgis når objektet opprettes/starter?** +
+Dataene som må oppgis tilsvarer argumenter til en eller flere _konstruktører_.
+
+Detaljene er avhengig av hvordan dataene lagres i objektet, så derfor er det ofte greit å starte kodingen med det tredje punktet.
+
+==== Klassedeklarasjonen
+
+Siden vi skal lage flere varianter av telleren vår, så bruker vi `Counter1` som navn på den første koden for telleren. Koden kalles en _klasse_ og før vi fyller den med konkret logikk, så må vi skrive følgende:
+
+[source, java]
+----
+package stateandbehavior.counter; // <1>
+
+class Counter1 { // <2>
+   // først kommer variabel-deklarasjoner <3>
+   // så konstruktører <4>
+   // deretter metoder <5>
+}
+----
+
+<1> `package`-setningen forteller at klassen hører til _pakka_ `stateandbehavior.counter` (i den fysiske mappa `stateandbehavior/counter` i `src`-mappa i prosjektet).
+<2> Klasse-deklarasjonen, angir navnet til klassen og dermed også _typen_ til teller-objektene.
+Det _fulle navnet_ til klassen er `stateandbehavior.counter.Counter1`.
+Navnet til klassen må tilsvare filnavnet, så koden for `stateandbehavior.counter.Counter1`-klassen må ligge i `Counter1.java` i mappa  `stateandbehavior/counter`.
+Mellom krøllparentesene kommer _deklarasjonene_ i det som er en slags naturlig leserekkefølge.
+<3> Variabeldeklarasjonene kommer som regel øverst, siden det meste av koden vil være avhengig av disse.
+<4> Konstruktørene kommer deretter, siden de nødvendigvis brukes før de vanlige metodene.
+<5> Metodene kommet til slutt, og metoder som hører sammen, f.eks. bruker eller endrer de samme dataene, ligger ofte samlet.
+Lesemetodene kommer gjerne før tilhørende endringsmetoder.
+
+==== Variabeldeklarasjoner
+
+Alt som objektet må huske må lagres i variabler, og for at `Counter1`-objektene skal kunne holde rede på
+både _teller_- og _slutt_-verdien, så trenger vi følgende variabeldeklarasjoner:
+
+[source, java]
+----
+int counter;
+int end;
+----
+
+`int` angir at variablene vil ha verdier som er _heltall_. I motsetning til språk som Python og Javascript
+så må typen til verdiene en variabel kan settes til, oppgis på forhånd. Dette kreves bl.a. for at vi skal kunne sjekke at variablene brukes riktig.
+F.eks. tillater heltall bruk av både + og -, mens med tekst (`String`) så kan en bare bruke + (som da betyr "slå sammen").
+Siden de to variablene har samme type, så kunne vi slått sammen de to linjene til `int counter, end;`, men
+det regnes som god skikk å ha dem på hver sin linje.
+Variabelnavn begynne iht. java-konvensjoner med liten forbokstav (i motsetning til f.eks. C#). 
+
+==== Konstruktør(er)
+
+Siden vi krever at en må oppgi start- og sluttverdi for telleren på forhånd, så må vi lage en såkalt _konstruktør_, som brukes når objekter lages.
+
+[source, java]
+----
+Counter1(int start, int end) { <1>
+   this.counter = start; // <2>
+   this.end = end;
+}
+----
+
+<1> En konstruktør må ha samme navn som klassen, og parametrene tilsvarer det som må oppgis når en lager et nytt object med `new`, f.eks. `new Counter1(2, 5)`.
+Vi ser at også parametre trenger en eksplisitt type, som naturlig nok er `int` (heltall) de også, siden de brukes til å sette tilsvarende variabel.
+<2> `this.counter` betyr `counter`-variablen i _dette_ objektet og brukes for å gjøre si at vi setter en variabel i objektet og ikke en lokal variabel i metoden.
+I den første linja kunne `this.` vært utelatt, fordi det ikke finnes noen lokal `counter`-variabel, men i neste linje, altså `this.end = end` er det vesentlig å ha `this.`
+for å kunne skille mellom variablen i objektet og den lokale variablen (parameteret) i metoden.
+
+De to tilordningene sikrer at de to variablene i objektet får riktig verdi fra starten, og generelt så er hensikten med en konstruktør å sikre at objektet
+har en gyldig _tilstand_ før det tas (ordentlig) i bruk.
+
+==== Objektdiagram
+
+Det er vanlig å illustrere hvordan konkrete objekter ser ut vha. et _objektdiagram_.
+Med variabler og konstruktør som over, vil et tenkt objekt opprettet med `new Counter1(2, 5)` se ut som følger:
+
+[plantuml]
+----
+object "~#1: Counter1" as counter1 {
+	counter = 2
+	end = 5
+}
+----
+
+Et objektdiagram viser objektene som bokser. I headeren i objekt-boksen angis typen (som oftest klassen som ble brukt sammen med `new` for å lage objektet) og en id (`#1`).
+Id-en er teknisk sett ikke en del av objektet, men er en diagramteknisk måte å gjøre det enklere å referere til figuren.
+Ofte brukes et tall, men noen ganger et ord, poenget er at det er unikt.
+I hoveddelen av objekt-boksen har vi variablene, hvor både navn og konkret verdi er med (mens typen utelates).
+Siden verdiene kan endre seg i løpet av _levetiden_ til objektet, så illustrerer diagrammet tilstanden til objektet på et bestemt _tidspunkt_.
+Objekter kan være koblet sammen med piler, for å angi at en variabel i ett objekt refererer til et annet objekt, men det er jo ikke aktuelt her.
+
+==== Metoder
+
+Etter konstruktøren er det vanlig å ha metoder for å hente ut/spørre om objektets innhold/tilstand. Vi tar metoden for å lese ut telleren først:
+
+[source, java]
+----
+int getCounter() { // <1>
+   return counter; // <2>
+}
+----
+
+<1> Typen til returverdien angis (som for variabler) foran navnet, og så kommer parameterlista inni parenteser.
+Her er lista tom, men den kan likevel ikke utelates.
+Når en metode som her, returnerer en enkel verdi, så er det standard å sette `get` foran det verdien representerer,
+som ofte også er navnet på variablen som holder verdien.
+<2> Innmaten til metoden kommer mellom krøllparentesene. En metode som returnerer en verdi, må ha en `return`-setning med et uttrykk bak.
+Her kunne vi brukt `this.` foran `counter` for å gjøre det eksplisitt at vi refererer til variablen i objektet,
+men siden det her er nokså opplagt, det er jo ingen lokale variabler, så utelater vi det.
+
+Metoden for å sjekke om telleren har nådd (eller passert) sluttverdien, kan skrives slik:
+
+[source, java]
+----
+boolean isFinished() { // <1>
+   return counter >= end;
+}
+----
+
+<1> `boolean` angir som over, typen til returverdien, som her er en _logisk_ verdi, altså enten `true` eller `false`.
+At navnet begynner med `is` skyldes et unntak i regelen med `get` som prefiks i navn til lesemetoder:
+Når returtypen er `boolean` så brukes `is`, da dette ofte gjør navnet mer naturlig å lese. `isFinished` er jo mer naturlig enn `getFinished`.
+<2> `return`-setningen kan virke litt rar, `counter >= end` er jo en betingelse, men det henger jo på greip
+siden _verdien_ av en sammenligning nettopp er en logisk verdi av typen `boolean`. Et alternativ er følgende:
+
+[source, java]
+----
+if (counter >= end)
+   return true;
+else
+   return false;
+----
+Dette er mer tungvint å både lese og skrive i et tilfelle som dette, så den første varianten er å foretrekke.
+
+Hvorfor bruke `>=` (større eller lik) og ikke `==` (lik)? Jo, i tilfelle objektet lages med en startverdi _høyere enn_ sluttverdien,
+så skal tellingen også regnes som ferdig!
+
+Den siste metoden har som oppgave å øke telleren med 1, dersom tellingen ikke er ferdig allerede:
+
+[source, java]
+----
+void count() { // <1>
+   if (! isFinished()) { // <2>
+      counter = counter + 1; // <3>
+   }
+}
+----
+
+<1> Her angir `void` at metoden _ikke_ returnerer noen verdi (void = tomrom, altså manglende verdi), og derfor kan vi utelate `return`-setningen.
+<2> `!` betyr logisk _negasjon_ tilsvarende _ikke_ og `isFinished()` er et kall til metoden vi skrev over, objektet spør på en måte seg selv om tellingen er ferdig (eller ikke).
+Denne testen er nødvendig for det er jo bare om tellingen ikke er ferdig at telleren skal økes.
+<3> Setningen som øker telleren kunne vært skrevet på to andre måter (!), `counter += 1` eller `counter++`.
+ 
+=== Konvensjoner for skriving av navn
+
+Java har strenge konvensjoner for skriving av navn, som en bør følge, for å unngå å forvirre andre programmerere som leser koden:
+
+- Pakkenavn begynner med liten forbokstav, og består ofte kun av små bokstaver.
+- Klassenavn begynner med stor forbokstav.
+- Variabel- og metodenavn (og andre navn) begynner med liten forbokstav.
+- Navn som består av flere ord, bruker stor forbokstav i hvert _delord_ etter det første, såkalt _camel case_,
+istedet for å ha - eller _ mellom ordene. Dette gjelder de fleste typer navn, inkludert klasse-, variabel- og metodenavn.
+
+=== Testing med main-metoden
+
+Hva gjenstår nå? Jo, å prøve ut koden! `Counter1`-klassen er foreløpig ikke noe program som kan kjøres direkte, da den bare inneholder teller-logikk som kan brukes hvis en har et (eller flere) `Counter1`-objekt(er).
+Slike objekter kan brukes i mange typer program eller app-er, og hvis vi kun ønsker å test koden, så er det enkleste å lage en såkalt `main`-metode i den samme klassen.
+En `main`-metode kreves for å kjøre klassen som et selvstendig program, og den må være deklarert på en helt spesifikk måte:
+
+[source, java]
+----
+public static void main(String[] args) {
+   // her putter vi koden som tester Counter1-klassen
+}
+----
+
+For å teste at logikken til koden vår er slik vi ønsker, lager vi et `Counter1`-objekt og veksler mellom å
+
+- lese tilstanden med `getCounter`- og `isFinished`-metodene og skrive ut resultatet med `System.out.println`, og
+- endre tilstanden til objektet ved å kalle `count`-metoden:
+
+[source, java]
+----
+public static void main(String[] args) {
+   Counter1 counter = new Counter1(2, 3); // <1>
+   System.out.println("Counter is: " + counter.getCounter()); // <2>
+   System.out.println("isFinished? " + counter.isFinished()); // <2>
+   counter.count(); // <3>
+   System.out.println("Counter is: " + counter.getCounter()); // <2>
+   System.out.println("isFinished? " + counter.isFinished()); // <2>
+}
+----
+<1> Opprettelse av objektet som skal testes
+<2> Utskrift av tilstanden til objektet. Det som skrives ut må (manuelt) sammenlignes med det som er forventet.
+
+Du kan selv tenke deg til hva som er forventet utskrift og så sjekke at så er tilfellet ved å kjøre koden!
+I Eclipse gjøres det ved å høyre-klikke i fila og velge Run As > Java Application. Dersom Java Application ikke dukker opp som valg i undermenyen,
+så betyr det enten at `main`-metoden mangler eller at den ikke er deklarert riktig.
+
+Senere kommer vi til hvordan vi skriver testkoden som sier fra om oppførselen _ikke_ er som forventet.
+
+==== Objekttilstandsdiagram
+
+I `main`-metoden over endrer (det samme) `Counter1`-objektet tilstand ved at `count`-metoden kalles etter opprettelsen med `new Counter1(2, 3)`.
+For å illustrere den trinnvise endringen av (ett eller flere) objekter brukes et _objekttilstandsdiagram_.
+Diagrammet under illustrerer hvordan objektet som opprettes i `main`-metoden, går fra en tilstand til en annen når `count`-metoden kalles.
+
+[plantuml]
+----
+object "~#1: Counter1" as counter1 {
+	counter = 2
+	end = 3
+}
+counter1 ..> counter1: getCounter() == 2
+counter1 ..> counter1: isFinished() == false
+
+object "~#1: Counter1" as counter2 {
+	counter = 3
+	end = 3
+}
+counter1 ..d> counter2: count()
+
+counter2 ..> counter2: getCounter() == 3
+counter2 ..> counter2: isFinished() == true
+----
+
+De to objekt-boksene representerer _samme_ objekt i to ulike tilstander. En ser det er samme objekt, fordi id-ene er like (`#1`).
+De stiplede pilene illustrerer utførelse av kode, f.eks. metodekall som her, som _potensielt_ endrer tilstanden.
+En stiplet pil som går tilbake til samme objekt-boks, viser at tilstanden _ikke_ endres. Diagrammet viser at dette er tilfellet for kall til `getCounter` og `isFinished`.
+For disse kallene vises også forventet returverdi, noe som er greit når en tenker på diagrammet som en "fasit" for test-utskriften.
+Når tilstanden endres, så går den stiplede pilen til objekt-boksen som representerer den nye tilstanden.
+Dette er tilfellet når `count`-metoden kalles når objektet er i den øverste tilstanden. Merk at siden `count`-metoden er deklarert som `void`,
+så gir det ikke mening å vise forventet returverdi, den har jo ingen!
+
+Spørsmål til slutt: Hva skjer hvis `count`-metoden kalles i den nederste tilstanden? Hvordan ville det vært riktig å illustrere det i diagrammet?
+
+== Videre lesning
+
+I <<Counter2.adoc#, Counter2>> utvider vi Counter1-eksemplet med muligheten for å restarte tellingen!

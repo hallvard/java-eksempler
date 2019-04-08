@@ -1,9 +1,5 @@
-package javafx.chess.v6;
+package javafx.chess.v7;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
 
 public class ChessController {
-
+	
 	private Chess chess = new Chess();
 
 	@FXML private Label a1, a2, a3, a4, a5, a6, a7, a8;
@@ -44,14 +39,14 @@ public class ChessController {
 	
 	private List<Rectangle> allSquares;
 	
-	private Map<Character, Character> whiteSymbols = new HashMap<>(), blackSymbols = new HashMap<>();
+	private Map<PieceKind, Character> whiteSymbols = new HashMap<>(), blackSymbols = new HashMap<>();
 
 	private static String unicodeSymbols = "R♜♖N♞♘B♝♗Q♛♕K♚♔P♟♙";
 
 	@FXML
 	void initialize() {
 		for (var i = 0; i < unicodeSymbols.length(); i += 3) {
-			var pieceKind = unicodeSymbols.charAt(i);
+			var pieceKind = PieceKind.of(unicodeSymbols.charAt(i));
 			blackSymbols.put(pieceKind, unicodeSymbols.charAt(i + 1));
 			whiteSymbols.put(pieceKind, unicodeSymbols.charAt(i + 2));
 		}
@@ -93,6 +88,9 @@ public class ChessController {
 		updateBoard();
 	}
 
+	private Map<Piece, String> highlightedPieces = new HashMap<>();
+	private Map<String, String> highlightedSquares = new HashMap<>();
+	
 	private void updateBoard() {
 		for (var label : allLabels) {
 			label.setText("");
@@ -118,18 +116,18 @@ public class ChessController {
 		}
 	}
 
-	private <T> T piece2fx(Piece piece, List<T> fxs) {
+	private Label piece2fx(Piece piece, List<Label> fxs) {
 		return square2fx(piece.getColumn(), piece.getRow(), fxs);
 	}
-	private <T> T square2fx(char line, int row, List<T> fxs) {
-		return fxs.get((line - 'a') * 8 + row - 1);
+	private <T> T square2fx(char col, int row, List<T> fxs) {
+		return fxs.get((col - 'a') * 8 + row - 1);
 	}
 
 	@FXML private TextField moveField;
 	
 	@FXML private Label messageLabel;
 	@FXML private Label statusLabel;
-
+	
 	@FXML
 	void handleMove() {
 		messageLabel.setText("");
@@ -144,10 +142,10 @@ public class ChessController {
 
 	}
 
-	private void handleMove(Piece piece, char toLine, int toRow) {
+	private void handleMove(Piece piece, char toCol, int toRow) {
 		messageLabel.setText("");
 		try {
-			chess.move(piece, toLine, toRow, true);
+			chess.move(piece, toCol, toRow, true);
 		} catch (RuntimeException e) {
 			messageLabel.setText(e.getMessage());
 		}
@@ -180,15 +178,14 @@ public class ChessController {
 		if (piece != null) {
 			if (piece.isWhite() == chess.isWhitesTurn()) {
 				setSelectedPiece(piece);
+				highlightSquares(piece, "green", "red");
+				updateBoard();
 			} else if (selectedPiece != null) {
 				handleMove(selectedPiece, line, row);
 			}
 		}
 	}
-	
-	private Map<Piece, String> highlightedPieces = new HashMap<>();
-	private Map<String, String> highlightedSquares = new HashMap<>();
-	
+
 	private void highlightSquares(Piece piece, String moveColor, String attackColor) {
 		highlightedPieces.clear();
 		highlightedSquares.clear();
@@ -219,8 +216,6 @@ public class ChessController {
 		}
 	}
 	
-	// undo & redo
-	
 	@FXML void handleUndoMove() {
 		chess.undoMove();
 		updateAll();
@@ -229,73 +224,5 @@ public class ChessController {
 	@FXML void handleRedoMove() {
 		chess.redoMove();
 		updateAll();
-	}
-	
-	// File handling
-	
-	@FXML void handleNew() {
-		chess = new Chess();
-		updateAll();
-	}
-	
-	private FileChooser fileChooser;
-
-	private FileChooser getFileChooser() {
-		if (fileChooser == null) {
-			fileChooser = new FileChooser();
-		}
-		return fileChooser;
-	}
-
-	@FXML void handleOpen() {
-		FileChooser fileChooser = getFileChooser();
-		File selection = fileChooser.showOpenDialog(null);
-		if (selection != null) {
-			try {
-				chess = new Chess(Files.readAllLines(selection.toPath()));
-				chess.setLocation(selection);
-				statusLabel.setText("Sucecssfully read " + selection);
-				updateAll();
-			} catch (Exception e) {
-				statusLabel.setText(e.getMessage());
-			}
-		}
-	}
-
-	private boolean handleSave(File location) {
-		try (var output = new PrintStream(new FileOutputStream(location))) {
-			output.print(chess);
-			return true;
-		} catch (Exception e) {
-			statusLabel.setText(e.getMessage());
-			return false;
-		}
-	}
-	
-	@FXML void handleSave() {
-		if (chess.getLocation() == null) {
-			handleSaveAs();
-		} else {
-			handleSave(chess.getLocation());
-		}
-	}
-	
-	private void handleSaveAs(boolean setLocation) {
-		FileChooser fileChooser = getFileChooser();
-		File selection = fileChooser.showSaveDialog(null);
-		if (selection != null) {
-			var ok = handleSave(selection);
-			if (ok && setLocation) {
-				chess.setLocation(selection);
-			}
-		}
-	}
-	
-	@FXML void handleSaveAs() {
-		handleSaveAs(true);
-	}
-	
-	@FXML void handleSaveCopyAs() {
-		handleSaveAs(false);
 	}
 }

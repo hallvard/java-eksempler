@@ -1,0 +1,68 @@
+== Versjon 7 av sjakk med JavaFX og FXML
+
+Denne versjonen innfører en klasse for hver _brikketype_, som kjenner reglene for flytting av brikker av den typen,
+i stedet for at alle reglene ligger i `Chess`-klassen. Dette gjør konstruksjonen ryddigere og potensielt mer utvidbart
+(med nye brikketyper, selv om det ikke er så aktuelt for akkurat sjakk). 
+
+=== Polymorfi og arv
+
+Sentralt for denne typen løsning er at alle brikker kan det samme, nemlig å si om et gitt (forsøk på) flytt er lov,
+men har ulike regler (basert på brikketype) for å sjekke det. Dette kalles _polymorfi_, som kan oversettes til noe sånt som _har flere former_.
+
+Teknikken er som følger:
+
+- De felles egenskapene eller ferdighetene deklareres i en egen klasse. Vi kaller klassen `PieceKind`,
+og de felles ferdighetene er metodene `getSymbol` og `checkMove(...)`. 
+- Siden det ikke finnes noen generell implementasjon av `checkMove`-metoden, så deklareres metoden som _abstrakt_ (`abstract`),
+og da må klassen også deklareres som det. Dette betyr at vi ikke kan instansiere `PieceKind` direkte, siden _implementasjonen_ av `checkMove` mangler.
+- For hver brikketype lager vi en subklasse som arver fra `PieceKind` (`extends PieceKind`) og implementerer `checkMove` iht. reglene for den brikketypen.
+Siden en slik klasse vil ha implementert alle nødvendige metoder, så kan den være konkret/instansierbar, i motsetning til abstrakt.
+- Når en annen klasse kaller `checkMove` på en (instans av en) spesifikk brikketype, altså instans av en subklasse av `PieceKind`,
+så kjøres den tilsvarende brikkespesifikke `checkMove`-metoden.
+
+[source, java]
+----
+public abstract class PieceKind {
+
+   public char getSymbol() {
+      String s = toString();
+      for (int i = 0; i < s.length(); i++) {
+         char c = s.charAt(i);
+         if (Character.isUpperCase(c)) {
+            return c;
+         }
+      }
+      throw new UnsupportedOperationException("getSymbol does not work with the toString method");
+   }
+   
+   public abstract void checkMove(Piece piece, char toLine, int toRow, Chess chess);
+   
+   protected void checkNoPieceInBetween(Piece piece, char toLine, int toRow, Chess chess) {
+      if (chess.isPieceBetween(piece, toLine, toRow, chess.findPieceAt(toLine, toRow))) {
+         throw new IllegalArgumentException("A " + this + " cannot jump over other pieces");
+      }
+   }
+
+   private static Collection<PieceKind> ALL_KINDS = List.of(
+         new KingKind(),
+         new BishopKind(),
+         new QueenKind(),
+         new RookKind(),
+         new KnightKind(),
+         new PawnKind()
+   );
+   
+   public static PieceKind of(char kind) {
+      for (PieceKind pieceKind : ALL_KINDS) {
+         if (pieceKind.getSymbol() == kind) {
+            return pieceKind;
+         }
+      }
+      return null;
+   }
+}
+----
+
+=== Endringer i Piece
+
+`Piece` sin `kind`-variabel bytter type fra `char` til `PieceKind`.

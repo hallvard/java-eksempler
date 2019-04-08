@@ -12,6 +12,11 @@
 			<artifactId>javafx-fxml</artifactId>
 			<version>11-ea+25</version>
 		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>11-ea+25</version>
+		</dependency>
 	</dependencies>
 
 	<properties>
@@ -29,6 +34,45 @@
 					<release>11</release>
 				</configuration>
 			</plugin>
+		    <plugin>
+		        <groupId>org.asciidoctor</groupId>
+		        <artifactId>asciidoctor-maven-plugin</artifactId>
+		        <version>1.5.7.1</version>
+		        <dependencies>
+					<dependency>
+					    <groupId>org.asciidoctor</groupId>
+					    <artifactId>asciidoctorj-diagram</artifactId>
+					    <version>1.5.12</version>
+					</dependency>
+		        </dependencies>
+		        <configuration>
+		        	<sourceDirectory>src</sourceDirectory>
+		        	<!-- <imagesDir>src</imagesDir> -->
+		        	<preserveDirectories>true</preserveDirectories>
+		        	<backend>html</backend>
+		        	<sourceHighlighter>highlight.js</sourceHighlighter>
+		        	<resources>
+					    <resource>
+					    	<directory>src</directory>
+					        <includes>
+					            <include>**/*.png</include>
+					        </includes>
+					    </resource>
+					</resources>
+		            <requires>
+		                <require>asciidoctor-diagram</require>
+		            </requires>
+		        </configuration>
+		        <executions>
+			        <execution>
+			            <id>process-asciidoc</id>              
+			            <phase>generate-resources</phase> 
+			            <goals>
+			                <goal>process-asciidoc</goal> 
+			            </goals>
+			        </execution>
+			    </executions>
+		    </plugin>
 		</plugins>
 	</build>
 </project>

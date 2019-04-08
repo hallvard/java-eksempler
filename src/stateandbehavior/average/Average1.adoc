@@ -1,0 +1,133 @@
+== Average1
+
+Dette eksemplet er, sammen med <<Average2.adoc#, Average2>>, ment å utvide forståelsen av sammenhengen mellom hvilke metoder et objekt har og hvilken intern tilstand i form av variabler, det trenger.
+
+=== Objekt-utforming
+
+Vi ønsker oss et objekt som kan holde rede på _gjennomsnittet_ av en sekvens med desimaltall.
+Objektet mottar ett og ett (desimal)tall utenifra og skal kunne gi tilbake gjennomsnittet av tallene det hittil har mottatt.
+
+Vi stiller oss de samme grunnleggende spørsmål, som i <<../counter/Counter1.adoc#, Counter1>>:
+
+- **Hva må en kunne spørre objektet om?** +
+Objektet må kunne gi oss gjennomsnittet av tallene det hittil har mottatt.
+- **Hvilke operasjoner må en kunne utføre på dataene?** +
+Objektet må kunne ta imot et nytt desimaltall.
+- **Hva må objektet huske (på av data) for å kunne oppføre seg riktig?** +
+Formelen for gjennomsnitt er *sum / antall*, så det er nok å holde rede på en løpende sum og antall (desimal)tall som er mottatt.  
+- **Hvilke data må oppgis når objektet opprettes/starter?** +
+Ingen.
+
+=== Koding
+
+Ingen så følger strukturen til koden av svarene på de fire spørsmålene.
+
+==== Klassedeklarasjonen
+
+Vi bruker `Average1` som klassenavn og legger java-fila i `stateandbehavior/average`-mappa under `src`:
+
+[source, java]
+----
+package stateandbehavior.average;
+
+class Average1 {
+   // først kommer variabel-deklarasjoner
+   // så konstruktører
+   // deretter metoder
+}
+----
+
+TIP: Du kan opprette klasser på flere måter, og det enkleste er å høyreklikke på `src`-mappa, velge `New > Class` og fylle inn både pakke- og klassenavn.
+
+==== Variabeldeklarasjoner
+
+Alt som objektet må huske må lagres i variabler, så for at `Average1`-objektene skal kunne holde rede på en løpende sum og antall mottatte tall, så trenger vi følgende variabeldeklarasjoner:
+
+[source, java]
+----
+double sum = 0.0; 
+int count = 0;
+----
+
+`double` angir at variablene vil ha verdier som er _desimaltall_, mens `int` brukes for _heltall_. Her fungerer deklarasjonen også som _initialisering_.
+I dette tilfellet kunne vi faktisk utelatt initialiseringen (men selvsagt ikke deklarasjonen) fordi `0.0` og `0` er _standardverdien_ til henholdsvis `double` og `int`,
+slik at det går for det samme. Generelt bør imidlertid variabler initialiseres, slik at ønsket startverdi gjøres eksplisitt.
+
+==== Konstruktør(er)
+
+Siden det ikke kreves at en må oppgi noe ved opprettelsen av objekter, så trenger vi ingen (eksplisitt) konstruktør.
+Hvis det ikke deklareres noen, så vil Java lage en uten parametre, slik at vi kan lage et `Average1`-objekt med `new Average1()`.
+
+==== Objektdiagram
+
+Opprettelse av et `Average1`-objekt med `new Average1()` gir følgende objekt(diagram):
+
+[plantuml]
+....
+object "~#1: Average1" as average1 {
+	sum = 0.0
+	count = 0
+}
+....
+
+==== Metoder
+
+[source, java]
+----
+double getMean() {
+   return sum / count;
+}
+
+void acceptValue(double value) {
+   sum += value; // <1>
+   count++; // <2>
+}
+----
+<1> Kan skrives som `sum = sum + value`
+<2> Kan skrives som `count = count + 1` eller `count += 1`
+
+==== Testing med main-metoden og objekttilstandsdiagram
+
+[source, java]
+----
+public static void main(String[] args) {
+   Average1 average = new Average1(); // <1>
+   average.acceptValue(4.0); // <3>
+   average.acceptValue(5.0); // <3>
+   System.out.println("Gjennomsnitt: " + average.getMean()); // <2>
+   average.acceptValue(6.0); // <3>
+   System.out.println("Gjennomsnitt: " + average.getMean()); // <2>
+}
+----
+<1> Opprettelse av test-objekt
+<2> Lesing og utskrift av tilstand
+<3> Endring av tilstand
+
+Under ser du diagrammet som tilsvarer opprettelsen av `Average1`-objektet med `new Average1()` og sekvensen av kall i `main`-metoden.
+
+[plantuml]
+----
+object "~#1: Average1" as average1 {
+	sum = 0.0
+	count = 0
+}
+object "~#1: Average1" as average3 {
+	sum = 9.0
+	count = 2
+}
+average1 ..> average3: acceptValue(4.0); acceptValue(5.0)
+average3 ..> average3: getMean() == 4.5
+object "~#1: Average1" as average4 {
+	sum = 15.0
+	count = 3
+}
+average3 ..> average4: acceptValue(6.0)
+average4 ..> average4: getMean() == 5.0
+----
+
+Spørsmål til slutt: Hva skjer hvis vi spør om gjennomsnittet før vi har gitt inn noen tall?
+F.eks. ved å legge inn en utskriftslinje (2) rett etter opprettelsen (1).
+
+=== Videre lesning
+
+I <<Average2.adoc#, Average2>> utvider vi Average1-eksemplet med beregning av medianverdi!

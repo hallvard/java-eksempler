@@ -1,0 +1,363 @@
+== Date
+
+Dette eksemplet handler om hensikten med innkapsling og hvilke teknikker som bidrar til det.
+
+=== Innkapsling
+
+Innkapsling har to formål:
+
+. Først og fremst skal det _hindre_ at et objekt _brukes galt_ og havner i en _tilstand som er ugyldig_ og kan føre til feil (siden).
+. For det andre skal det gjøre det enklere å endre detaljer i (koden for) håndtering av intern tilstand, uten at koden i andre klasser også må endres.
+
+Teknikken er å _skjule_ alle implementasjonsdetaljer for andre klasser og sikre at all tilgang til tilstand og spesielt endring av den, skjer ved å kalle _åpne_ metoder.
+Konstruktørene og endringsmetodene får ansvar for å sikre at tilstanden hele tiden er og forblir gyldig.
+
+Eksempelobjektet vårt skal holde rede på dato-informasjon, altså et tidspunkt representert ved dag, måned og år.
+Hver av disse representeres med et heltall, med begrensninger i verdieområdet iht. vanlig kalenderlogikk.  
+
+=== Koden
+
+Vi kaller klassen vår `Date` og legger den i pakken `encapsulation.date`.
+Merk at det allerede finnes en standard `Date`-klasse i pakken `java.util`.
+
+==== Variablene
+
+Vi bestemmer oss først for hvordan tilstanden skal representeres i form av variabler:
+
+[source, java]
+----
+int year;  // ingen begrensninger
+int month; // 1 til (og med) 12
+int day    // 1 til (og med) antall dager i måneden
+----
+
+`month`-variablen må altså begrenses til tallene 1-12, og gyldig verdiområde for `day` er avhengig av både måneden og året (pga. skuddår).
+Hvis `month` f.eks. er 2 (for februar) så må `day` begrenses til 1-28, med mindre `year` tilsvarer et skuddår, hvor også 29 tillates.
+
+==== Endringsmetoder
+
+Det er koden som _endrer_ tilstanden, som må hindre at tilstanden blir feil, altså sikre at variablene holdes innenfor _gyldige_ verdiområder.
+Teknikken er enkel: Før variabler endres, så sjekkes det om de(n) nye verdien(e) vil være gyldig(e).
+Om de(n) ikke vil være det, så _utløses unntak_, som er en måte å "kræsje" et program på som gir informasjon om hva som gikk galt,
+med mulighet til å håndtere det (mer om det i andre eksempler).
+
+Her er et eksempel på hvordan metoden for å endre måneden kan se ut:
+
+[source, java]
+----
+void setMonth(int month) {
+   if (month < 1 || month > 12) { // <1>
+      throw new IllegalArgumentException("The month must be in the range [1, 12]"); // <2>
+   }
+   this.month = month; // <3>
+}   
+----
+<1> Sjekker om ny verdi er gyldig, eller mer presist: Om bruk av den nye verdien vil føre til at tilstanden for _hele_ objektet _forblir_ gyldig.
+<2> Utløser et passende unntak med en deskriptiv tekst. Dette _avbryter_ utførelsen av metoden.
+<3> Tilstanden endres først når det er sikret at den vil være gyldig. Merk bruken av `this` for så skille mellom objektvariabel og parameter.
+
+Konvensjonen i Java er å navngi slike endringsmetoder med `set` foran det logiske navnet til verdien som endres, derav navnet `setMonth`.
+Derfor kaller en gjerne slike metoder for "settere".
+
+Koden over kan virke helt grei, men det er faktisk ikke så enkelt: Det er ikke nok å sjekke at argumentet er i verdiområdet 1-12,
+tilstanden kan fortsatt bli ugyldig fordi flere variabler henger sammen. Anta f.eks. at `month` og `day` er henholdsvis `1` og `31`, altså verdiene som tilsvarer 31. januar.
+Så kalles `setMonth(2)`, som vil endre datoen til 31. februar! Dette er opplagt galt og må forhindres.
+
+Løsningen generelt sett er å både sjekke argumentene isolert sett og sammen med gjeldende verdi for andre variabler, slik at en vurderer dem samlet.
+Her må en sjekke `month`-argumentet sammen med `day`-variablen (i objektet). Eller vent litt, siden vi også må ta høyde for skuddår,
+så må vi også ta hensyn til `year`-variablen. Hvis gjeldende dato er 29. januar, så kan jo endring av `month` til 2 faktisk være greit,
+om det er skuddår og 29. februar faktisk finnes.
+
+Her er et forslag til kode, hvor vi har forutsatt at det finnes en hjelpemetode kalt `daysInMonth`,
+som returnerer antall dager i måneden (og tar høyde for skuddår):
+
+[source, java]
+----
+void setMonth(int month) {
+   if (month < 1 || month > 12) { // <1>
+      throw new IllegalArgumentException("The month must be in the range [1, 12]");
+   }
+   int dayLimit = daysInMonth(year, month);
+   if (day < 1 || day > dayLimit) { // <2>
+      throw new IllegalArgumentException(String.format("The day must be in the range [1, %s], when the month is %s and the year is %s", dayLimit, month, year));
+   } 
+   this.month = month;
+}   
+----
+<1> Først sjekkes måneden (som over), og hvis den er grei fortsetter koden.
+<2> Dagen sjekkes, etter å ha beregnet maks-verdien vha. hjelpemetoden `daysInMonth`.
+
+==== Valideringsmetoder
+
+Ofte er det lurt å flytte koden med alle verdi-sjekkene over i en eller flere hjelpemetoder,
+såkalte _valideringsmetoder_. Det gjør koden lettere å lese, og siden de samme `if`-setningene ofte må brukes flere steder, så sparer en kode:
+ 
+[source, java]
+----
+void checkDate(int year, int month, int day) { // <1>
+   if (month < 1 || month > 12) {
+      throw new IllegalArgumentException("The month must be in the range [1, 12]");
+   }
+   int dayLimit = daysInMonth(year, month);
+   if (day < 1 || day > dayLimit) {
+      throw new IllegalArgumentException(String.format("The day must be in the range [1, %s], when the month is %s and the year is %s", dayLimit, month, year));
+   } 
+}
+
+void setYear(int year) {
+   checkDate(year, this.month, this.day); // <2>
+   this.year = year; // <5>
+}   
+
+void setMonth(int month) {
+   checkDate(this.year, month, this.day); // <3>
+   this.month = month; // <5>
+}
+
+void setDay(int day) {
+   checkDate(this.year, this.month, day); // <4>
+   this.day = day; // <5>
+}
+----
+
+<1> `checkDate`-metoden sjekker et sett med år-, måned- og dag-verdier samlet,
+og alle endringsmetoder som endrer en av de tre variablene, kaller denne.
+<2> Sjekker ny `year`-verdi sammen med eksisterende `month`- og `day`-verdier.
+<3> Sjekker ny `month`-verdi sammen med eksisterende `year`- og `day`-verdier
+<4> Sjekker ny `day`-verdi sammen med eksisterende `year`- og `month`-verdier
+<5> Tilordningene utføres bare dersom kallet til `checkDate` _ikke_ utløser unntak.
+Litt forvirrende, kanskje, men det er slik unntak virker. Bare prøv og se!
+
+`checkDate`-metoden over validerer og utløser unntak for å si fra om feil.
+Det hender man i stedet velger å la valideringsmetoden returnere `true` om det er greit og `false` ellers,
+og så utløser unntak i endringsmetoden:
+
+[source, java]
+----
+boolean isValidDate(int year, int month, int day) {
+   if (month < 1 || month > 12) {
+      return false;
+   }
+   int dayLimit = daysInMonth(year, month);
+   if (day < 1 || day > dayLimit) {
+      return false;
+   }
+   return true;
+}
+
+void setYear(int year) {
+   if (! isValidDate(year, this.month, this.day)) {
+      throw new IllegalArgumentException("This combination of year (" + year + "), this.month (" + month + ") and day (" + this.day + ") is illegal");
+   }
+   this.year = year;
+}
+
+// tilsvarende for setMonth og setDay
+----
+
+Fordelen er bl.a. at det er litt lettere å se at endringsmetoden faktisk kan utløse unntak, men her ser en også at det er flere ulemper:
+Det blir mer duplisering av kode, og unntaksteksten blir mindre spesifikk, siden en ikke vet akkurat hvilken betingelse som ikke ble oppfylt.
+Generelt kan en ha én eller flere valideringsmetoder av en eller begge typer, en må vurdere hva som er mest praktisk i hvert tilfelle.
+
+==== Konstruktører
+
+Hittil har vi fokusert vi på _endring_ av tilstand, gitt at tilstanden _før_ endringen var gyldig.
+Vi må selvsagt også sjekke at den initielle tilstanden, som settes ved opprettelsen, er gyldig.
+I vårt tilfelle kan det gjøres ved å initialisere `month`- og `day`-variablene til `1`, slik at et nyopprettet `Date`-objekt tilsvarer 1. januar i år 0.
+Her er det nok bedre å ha en konstruktør som tar inn alle de tre "tidskoordinatene", slik at de valideres og settes samlet:
+
+[source, java]
+----
+Date(int year, int month, int day) {
+   checkDate(year, month, day); // <1>
+   this.year = year;
+   this.month = month;
+   this.day = day;
+}
+----
+
+<1> Samme sjekk som over, opprettelsen av objektet blir avbrutt hvis `checkDate` utløser unntak.
+
+En kan forsåvidt også argumentere med at det er greit å ha en tilsvarende `set`-metode, som setter alle verdiene på én gang.
+Da blir koden som følger:
+
+[source, java]
+----
+Date(int year, int month, int day) {
+   setDate(year, month, day); // <2>
+}
+
+void setDate(int year, int month, int day) {
+   checkDate(year, month, day); // <1>
+   this.year = year;
+   this.month = month;
+   this.day = day;
+}
+----
+
+<1> Hvis `checkDate` utløser unntak, så avbrytes `setDate`-metoden.
+<2> Hvis `setDate` avbrytes fordi kallet til `checkDate` utløser unntak, så avbrytes konstruktøren.
+
+Med en slik endre-alt-på-en-gang-metode kan konstruktøren bare kalle den og få valideringen på kjøpet.
+
+==== Synlighetsmodifikatorene `public` og `private`
+
+Hvis en koder endringsmetoder som over, så hindrer en at tilstanden blir ugyldig, men bare dersom metodene må brukes!
+Anta f.eks. at vi har en variabel av typen `Date` i en annen klasse, la oss si den heter `birthday`, og så skriver `birthday.day = 47`.
+Da blir jo tilstanden gal, på tross av endringsmetodene. Uten en mekanisme for å _hindre_ direkte tilgang til variablene, så er en nesten like langt.
+
+Java sin mekanisme er såkalte _synlighetsmodifikatorer_, som styrer hvilke variabler og metoder i en klasse, som kan _refereres_ direkte til i andre klasser.
+Synlighetsmodifikatorer er spesial-ord som settes foran deklarasjonen:
+
+- `private` angir at en variabel, metode eller konstruktør _ikke kan referere (direkte) til_ fra en annen klasse
+- `public` angir at en variabel, metode eller konstruktør kan refereres direkte til fra `alle` klasser.
+- _Ingen_ modifikator angir at bare klasser i _samme pakke_ (som gjerne hører sammen) kan bruke variablen, metoden eller konstruktøren.
+
+Den generelle regelen blir å bruke `private` foran alle variabeldeklarasjoner og `public` foran _utvalgte_ konstruktører og metoder.
+Hjelpemetoder som `daysInMonth` får som regel `private`-synlighet, med mindre de er så nyttige for andre klasser
+at en velger å gjøre dem helt (`public`) eller delvis (ingen modifikator) synlige.
+
+Det viktigste er uansett at `public`-konstruktøren(e) må sikre at tilstanden er gyldig fra starten av,
+og `public`-metodene må sikre at tilstanden _forblir_ gyldig.
+
+==== Lesemetoder
+
+Med regelen over om at variabler skal være `private`, så blir de helt usynlige utenifra, og da må en som oftest også ha en del `public`-metoder for å lese tilstanden.
+Slike _lesemetoder_ er metoder som skal gi mulighet til å observere tilstanden til (variablene i) et objekt.
+I en klasse som `Date` er det naturlig å ha én metode tilsvarende hver variabel:
+
+[source, java]
+----
+public int getYear() {
+   return year;
+}
+	
+public int getMonth() {
+   return month;
+}
+	
+public int getDay() {
+   return day;
+}
+----
+
+Konvensjonen i Java er å navngi slike enkle lesemetoder ved å sette `get` foran det logiske navnet på verdien en leser.
+Derfor kaller en gjerne slike metoder for "gettere". I tilfeller hvor verdien er av type `boolean` så kan `is` brukes som prefiks i stedet, når det gjør koden mer naturlig å lese.
+
+=== API-er og intern tilstand
+
+`public`-konstruktørene og -metodene til en klasse utgjør klassens _grensesnitt_ mot andre klasser, det som også kalles klassens API, for Application Programming Interface.
+Det er behovene _andre_ klasser har, som skal være styrende for utforming av konstruktører og metoder, ikke hva som er mest lettvint for klassen selv.
+Hvis det f.eks. er nyttig for andre klasser å kunne justere et `Date`-objekt til å referere til _forrige_ eller _neste_ dag,
+så kan en legge til metoder som `setToPreviousDay` og `setToNextDay`:
+
+[source, java]
+----
+public void setToPreviousDay() {
+   day = day - 1;
+   if (day < 1) { // <1>
+      month = month - 1;
+      if (month < 1) { // <2>
+         year = year - 1;
+         month = 12;
+      }
+      day = daysInMonth(year, month);
+   }
+}
+
+public void setToNextDay() {
+   day = day + 1;
+   if (day > daysInMonth(year, month)) { // <1>
+      month = month + 1;
+      if (month > 12) { // <2>
+         year = year + 1;
+         month = 1;
+      }
+      day = 1;
+   }	
+}
+----
+
+<1> Sjekker om en også må justere måneden.
+<2> Sjekker om en også må justere året.
+
+Her er det også et poeng at det vil være vesentlig mer jobb å kode tilsvarende metodene utenfor `Date`-klassen (prøv!).
+Da er det greit å gjøre andre klasser den tjenesten å inkludere dem i `Date` sitt API. Slike metoder, som ikke er nødvendige,
+men gjør klassen enklere å bruke, kan gjerne kalles _bekvemmelighetsmetoder_ (eng: convenience methods).
+
+I motsetning til API-et, så utformes den interne tilstanden slik at klassen selv er lettvint å kode.
+Det er greit, for den er jo likevel ikke synlig for andre klasser.
+I en godt innkapslet klasse så står en friere til å velge intern representasjon og evt. endre den,
+uten at koden i andre klasser blir påvirket.
+
+Vi kunne f.eks valgt å representere måneden som et tall i verdiområdet 0-11, selv om lesemetoden for måneden returnerer et tall i området 1-12 og
+endringsmetoden tilsvarende tar inn et tall i samme verdiområde. Det kunne vi gjort ved en enkel omkoding, uten å påvirke andre klasser.
+Det er slett ikke uvanlig å ha get-metoder og variabler som hører sammen, men hvor verdien til variablen og returverdien til
+get-metoden ikke er lik. Det vesentlige er at get- og set-metodene bruker samme logikk.
+
+Det kan godt være større forskjell mellom metoder og intern representasjon enn som så.
+En kan f.eks. ha en metode som heter `isLeapYearDay` som returnerer `true` kun dersom `Date`-objektet representerer 29. februar.
+Da vil det ut fra navnet se ut som det finnes en `leapYearDat`-variabel av type `boolean`,
+men det naturlige vil være å _beregne_ verdien fra de tre virkelige variablene.
+
+Generelt kan en lage getter/setter-par som gir inntrykk av at objektet har en tilsvarende variable,
+uten at en slik nødvendigvis finnes. En slik "virtuell" variabel som leses/endres med getter/setter-metoder kalles ofte en "property",
+uavhengig av om den er reell eller ikke. Dette er noe av styrken til innkapsling: API-et er "fasaden" til objektet,
+som kan være nokså ulik innsiden.
+
+=== Objektdiagram og klassediagram
+
+_Objektdiagrammer_ viser tilstanden til ett eller flere objekter (i en tenkt situasjon), under vises to `Date`-objekter:
+
+[plantuml]
+----
+object "~#skuddårsdag: Date" as date1 {
+   day = 29
+   month = 2
+   year = 2020
+}
+object "~#grunnlovsdag: Date" as date2 {
+   day = 17
+   month = 5
+   year = 2019
+}
+----
+Slike diagrammer er nyttige for å forstå (detaljer ved) utførelsen av programmer,
+men de sier lite om hvordan en _bruker_ objekter av en gitt type, altså _programmerer_ med dem. Til det er _klassediagrammer_ bedre,
+siden de gir en oversikt over deklarasjonene og indikerer hvilke variabler, konstruktører og metoder som er `private` og `public`.
+
+Her er klassediagrammet for én av variantene over:
+
+[plantuml]
+----
+class Date {
+   - int day
+   - int month
+   - int year
+   + Date(int year, int month, int day)
+   + int getDay()
+   + int getMonth()
+   + int getYear()
+   - void checkDate(int year, int month, int day)
+   + void setDate(int year, int month, int day)
+   + void setYear(int year)
+   + void setMonth(int month)
+   + void setDay(int day)  
+}
+----
+Synligheten er angitt med fargen på punktet, grønn angir `public` og rød angir `private`. Siden fokuset i slike diagrammer ofte er programmering på tvers av klasser,
+så utelater en gjerne alt som er `private`, slik at det som er igjen er API-et til klassen:
+
+[plantuml]
+----
+class Date {
+   + Date(int year, int month, int day)
+   + int getDay()
+   + int getMonth()
+   + int getYear()
+   + void setDate(int year, int month, int day)
+   + void setYear(int year)
+   + void setMonth(int month)
+   + void setDay(int day)  
+}
+----

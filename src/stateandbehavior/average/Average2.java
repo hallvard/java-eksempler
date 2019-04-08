@@ -26,7 +26,8 @@ public class Average2 {
 	}
 
 	double getMedian() {
-		int count = values.size(), middle = count / 2;
+		int count = values.size();
+		int middle = count / 2;
 		if (count % 2 == 0)
 			return (values.get(middle - 1) + values.get(middle)) / 2;
 		else

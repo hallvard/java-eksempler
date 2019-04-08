@@ -1,7 +1,0 @@
-@startuml
-object "~#2: Counter2" as counter1 {
-	start = 2
-	end = 5
-	counter = 0
-}
-@enduml

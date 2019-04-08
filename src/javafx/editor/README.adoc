@@ -1,0 +1,17 @@
+# Editor med JavaFX og FXML
+
+Dette eksemplet viser utviklingen av en enkel (og foreløpig ufullstendig) editor-app i (foreløpig) 2 trinn,
+fra versjon 1 som kun støtter navigering (ikke redigering) i en linje med tekst, til versjon 2,
+som støtter innsetting og sletting av tekst.
+Underveis skjer det en del endringer som er typiske for hvordan et kodingsprosjekt utvikler seg,
+når det går fra det enkleste som virker til en ryddig konstruksjon.
+
+Versjonene har hver sin Ed.adoc-fil som beskriver hva som er nytt i den versjonen ift. forrige. Her er det kort oppsummert:
+
+- <<v1/Ed.adoc#, v1>>: Enkel linje-editor, kun med mulighet for å flytte markøren med venstre og høyre piltast.
+- <<v2/Ed.adoc#, v2>>: Funksjoner for å sette inn og slette tekst.
+** Kontrolleren: Byttet ut if med switch i controlleren.
+- <<v3/Ed.adoc#, v3>>: Støtte for seleksjon.
+** Ed: Litt generalisering og opprydding i form av én replace-metode.
+** Controller: Liste av tastebindinger.
+- <<v4/Ed.adoc#, v4>>: Støtte for flere linjer og egen type for posisjoner i teksten.

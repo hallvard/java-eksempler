@@ -35,7 +35,8 @@ public class Person2 {
 			givenName = "?";
 		}
 		int pos = fullName.lastIndexOf(' ');
-		fullName = givenName + " " + fullName.substring(pos + 1);
+		String familyName = fullName.substring(pos + 1);
+		this.fullName = givenName + " " + familyName;
 	}
 	
 	public String getFamilyName() {
@@ -52,7 +53,8 @@ public class Person2 {
 			familyName = "?";
 		}
 		int pos = fullName.lastIndexOf(' ');
-		fullName = fullName.substring(0, pos) + " " + familyName;
+		String givenName = fullName.substring(0, pos);
+		this.fullName = givenName + " " + familyName;
 	}
 	
 	public String getFullName() {
