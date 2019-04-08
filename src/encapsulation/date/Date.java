@@ -2,16 +2,27 @@ package encapsulation.date;
 
 public class Date {
 
-	private int year;
-	// month er 1-12
-	private int month;
-	// day er 1-28/29/30/31, avhengig av måneden og året
-	private int day;
+	// tag::variabler[]
+	private int year;  // ingen begrensninger
+	private int month; // 1 til (og med) 12
+	private int day;   // 1 til (og med) antall dager i måneden
+	// end::variabler[]
 	
+	// tag::constructor[]
 	public Date(int year, int month, int day) {
-		setDate(year, month, day);
+		setDate(year, month, day); // <2>
 	}
+	// end::constructor[]
 
+	// tag::multi-setter[]
+	public void setDate(int year, int month, int day) {
+		checkDate(year, month, day); //<1>
+		this.year = year;
+		this.month = month;
+		this.day = day;
+	}
+	// end::multi-setter[]
+	
 	private boolean isLeapYear(int year) {
 		return (year % 4 == 0 && (! (year % 100 == 0))) || year % 400 == 0;
 	}
@@ -26,16 +37,7 @@ public class Date {
 		return daysInMonth;
 	}
 	
-	private void checkDate(int year, int month, int day) {
-		if (month < 1 || month > 12) {
-			throw new IllegalArgumentException("The month must be in the range [1, 12]");
-		}
-		int dayLimit = daysInMonth(year, month);
-		if (day < 1 || day > dayLimit) {
-			throw new IllegalArgumentException(String.format("The day must be in the range [1, %s], when the month is %s and the year is %s", dayLimit, month, year));
-		}
-	}
-	
+	// tag::getters[]
 	public int getYear() {
 		return year;
 	}
@@ -47,36 +49,43 @@ public class Date {
 	public int getDay() {
 		return day;
 	}
+	// end::getters[]
+	
+	// tag::setters[]
+	private void checkDate(int year, int month, int day) {// <1>
+		if (month < 1 || month > 12) {
+			throw new IllegalArgumentException("The month must be in the range [1, 12]");
+		}
+		int dayLimit = daysInMonth(year, month);
+		if (day < 1 || day > dayLimit) {
+			throw new IllegalArgumentException(String.format("The day must be in the range [1, %s], when the month is %s and the year is %s", dayLimit, month, year));
+		}
+	}
 	
 	public void setYear(int year) {
-		checkDate(year, month, day);
-		this.year = year;
+		checkDate(year, this.month, this.day); // <2>
+		this.year = year; // <5>
 	}
 	
 	public void setMonth(int month) {
-		checkDate(year, month, day);
-		this.month = month;
+		checkDate(this.year, month, this.day); // <3>
+		this.month = month; // <5>
 	}
 	
 	public void setDay(int day) {
-		checkDate(year, month, day);
-		this.day = day;
+		checkDate(this.year, this.month, day); // <4>
+		this.day = day; // <5>
 	}
-	
-	public void setDate(int year, int month, int day) {
-		checkDate(year, month, day);
-		this.year = year;
-		this.month = month;
-		this.day = day;
-	}
+	// end::setters[]
 	
 	// bekvemmelighetsmetoder
 	
+	// tag::convenience-methods[]
 	public void setToPreviousDay() {
 		day = day - 1;
-		if (day < 1) {
+		if (day < 1) { // <1>
 			month = month - 1;
-			if (month < 1) {
+			if (month < 1) { // <2>
 				year = year - 1;
 				month = 12;
 			}
@@ -86,16 +95,16 @@ public class Date {
 
 	public void setToNextDay() {
 		day = day + 1;
-		if (day > daysInMonth(year, month)) {
+		if (day > daysInMonth(year, month)) { // <1>
 			month = month + 1;
-			if (month > 12) {
+			if (month > 12) { // <2>
 				year = year + 1;
 				month = 1;
 			}
 			day = 1;
-		}
-		
+		}		
 	}
+	// end::convenience-methods[]
 
 	//
 	

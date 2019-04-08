@@ -26,9 +26,7 @@ Vi bestemmer oss først for hvordan tilstanden skal representeres i form av vari
 
 [source, java]
 ----
-int year;  // ingen begrensninger
-int month; // 1 til (og med) 12
-int day    // 1 til (og med) antall dager i måneden
+include::Date.java[tag=variabler]
 ----
 
 `month`-variablen må altså begrenses til tallene 1-12, og gyldig verdiområde for `day` er avhengig av både måneden og året (pga. skuddår).
@@ -94,30 +92,7 @@ såkalte _valideringsmetoder_. Det gjør koden lettere å lese, og siden de samm
  
 [source, java]
 ----
-void checkDate(int year, int month, int day) { // <1>
-   if (month < 1 || month > 12) {
-      throw new IllegalArgumentException("The month must be in the range [1, 12]");
-   }
-   int dayLimit = daysInMonth(year, month);
-   if (day < 1 || day > dayLimit) {
-      throw new IllegalArgumentException(String.format("The day must be in the range [1, %s], when the month is %s and the year is %s", dayLimit, month, year));
-   } 
-}
-
-void setYear(int year) {
-   checkDate(year, this.month, this.day); // <2>
-   this.year = year; // <5>
-}   
-
-void setMonth(int month) {
-   checkDate(this.year, month, this.day); // <3>
-   this.month = month; // <5>
-}
-
-void setDay(int day) {
-   checkDate(this.year, this.month, day); // <4>
-   this.day = day; // <5>
-}
+include::Date.java[tag=setters]
 ----
 
 <1> `checkDate`-metoden sjekker et sett med år-, måned- og dag-verdier samlet,
@@ -183,16 +158,7 @@ Da blir koden som følger:
 
 [source, java]
 ----
-Date(int year, int month, int day) {
-   setDate(year, month, day); // <2>
-}
-
-void setDate(int year, int month, int day) {
-   checkDate(year, month, day); // <1>
-   this.year = year;
-   this.month = month;
-   this.day = day;
-}
+include::Date.java[tags=constructor;multi-setter]
 ----
 
 <1> Hvis `checkDate` utløser unntak, så avbrytes `setDate`-metoden.
@@ -228,17 +194,7 @@ I en klasse som `Date` er det naturlig å ha én metode tilsvarende hver variabe
 
 [source, java]
 ----
-public int getYear() {
-   return year;
-}
-	
-public int getMonth() {
-   return month;
-}
-	
-public int getDay() {
-   return day;
-}
+include::Date.java[tag=getters]
 ----
 
 Konvensjonen i Java er å navngi slike enkle lesemetoder ved å sette `get` foran det logiske navnet på verdien en leser.
@@ -253,29 +209,7 @@ så kan en legge til metoder som `setToPreviousDay` og `setToNextDay`:
 
 [source, java]
 ----
-public void setToPreviousDay() {
-   day = day - 1;
-   if (day < 1) { // <1>
-      month = month - 1;
-      if (month < 1) { // <2>
-         year = year - 1;
-         month = 12;
-      }
-      day = daysInMonth(year, month);
-   }
-}
-
-public void setToNextDay() {
-   day = day + 1;
-   if (day > daysInMonth(year, month)) { // <1>
-      month = month + 1;
-      if (month > 12) { // <2>
-         year = year + 1;
-         month = 1;
-      }
-      day = 1;
-   }	
-}
+include::Date.java[tag=getters]
 ----
 
 <1> Sjekker om en også må justere måneden.
