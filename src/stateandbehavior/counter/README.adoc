@@ -1,0 +1,3 @@
+== Counter-eksemplene
+
+Counter-eksemplene <<Counter1.adoc#, Counter1>> og <<Counter2.adoc#, Counter2>> er ment å introdusere enkle objekter og klasser og tilhørende Java-syntaks.

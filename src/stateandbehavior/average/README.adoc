@@ -1,0 +1,3 @@
+== Average-eksemplene
+
+Average-eksemplene <<Average1.adoc#, Average1>> og <<Average2.adoc#, Average2>> er ment å utvide forståelsen av sammenhengen mellom hvilke metoder et objekt har og hvilken intern tilstand i form av variabler, det trenger.
