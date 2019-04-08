@@ -45,8 +45,7 @@ Alt som objektet må huske må lagres i variabler, så for at `Average1`-objekte
 
 [source, java]
 ----
-double sum = 0.0; 
-int count = 0;
+include::Average1.java[tag=variables]
 ----
 
 `double` angir at variablene vil ha verdier som er _desimaltall_, mens `int` brukes for _heltall_. Her fungerer deklarasjonen også som _initialisering_.
@@ -74,15 +73,9 @@ object "~#1: Average1" as average1 {
 
 [source, java]
 ----
-double getMean() {
-   return sum / count;
-}
-
-void acceptValue(double value) {
-   sum += value; // <1>
-   count++; // <2>
-}
+include::Average1.java[tag=methods]
 ----
+
 <1> Kan skrives som `sum = sum + value`
 <2> Kan skrives som `count = count + 1` eller `count += 1`
 
@@ -90,14 +83,7 @@ void acceptValue(double value) {
 
 [source, java]
 ----
-public static void main(String[] args) {
-   Average1 average = new Average1(); // <1>
-   average.acceptValue(4.0); // <3>
-   average.acceptValue(5.0); // <3>
-   System.out.println("Gjennomsnitt: " + average.getMean()); // <2>
-   average.acceptValue(6.0); // <3>
-   System.out.println("Gjennomsnitt: " + average.getMean()); // <2>
-}
+include::Average1.java[tag=main-method]
 ----
 <1> Opprettelse av test-objekt
 <2> Lesing og utskrift av tilstand

@@ -28,8 +28,7 @@ En `List` holder selv rede på hvor mange elementer den inneholder, så vi treng
 
 [source, java]
 ----
-List<Double> values = new ArrayList<Double>();
-double sum = 0.0;
+include::Average2.java[tag=variables]
 ----
 
 En viktig ting må nevnes: Både `List` og `ArrayList` er forhåndsdefinerte klasser i pakken `java.util`, og derfor må vi egentlig skrive `java.util.List>` og `java.util.ArrayList` for å være presis,
@@ -43,12 +42,9 @@ package stateandbehavior.average;
 import java.util.List;
 import java.util.ArrayList;
 
-class Average1 {
+class Average2 {
 
-   // først kommer variabel-deklarasjoner
-   List<Double> values = new ArrayList<Double>();
-   double sum = 0.0;
-   
+   // først kommer variabel-deklarasjoner (se over)
    // så konstruktører
    // deretter metoder
 }
@@ -80,32 +76,9 @@ Klassen må forøvrig utvides på to måter, vi trenger en ny `getMedian`-metode
 
 [source, java]
 ----
-double getMean() {
-   return sum / values.size(); // <1>
-}
-
-double getMedian() {
-   // hjelpevariabler
-   int count = values.size();
-   int middle = count / 2;
-   if (count % 2 == 0) // <2>
-      return (values.get(middle - 1) + values.get(middle)) / 2; // <3>
-   else
-      return values.get(middle); // <4>
-}
-
-void acceptValue(double value) {
-   int i = 0; // <5>
-   while (i < values.size()) { // <6>
-      if (values.get(i) > value) { // <7>
-         break; // <8>
-      }
-      i++; // <9>
-   }
-   values.add(i, value); // <10>
-   sum += value; // <11>
-}
+include::Average2.java[tag=methods]
 ----
+
 <1> Deler sum på antall verdier, som en får fra liste-objektets size-metode.
 <2> Hvis antallet verdier er et partall (resten når vi deler på 2 er 0)
 <3> Returner gjennomsnittet av de to midterste verdiene
@@ -123,22 +96,7 @@ Vi lar `i`-variablen løpe fra 0 til (men ikke med) lista sin lengde.
 
 [source, java]
 ----
-public static void main(String[] args) {
-   Average2 average = new Average2();
-   average.acceptValue(4.0);
-   average.acceptValue(5.0);
-   System.out.println("Verdier: " + average.values);
-   System.out.println("Gjennomsnitt: " + average.getMean());
-   System.out.println("Middelverdi: " + average.getMedian());
-   average.acceptValue(3.0);
-   System.out.println("Verdier: " + average.values);
-   System.out.println("Gjennomsnitt: " + average.getMean());
-   System.out.println("Middelverdi: " + average.getMedian());
-   average.acceptValue(0.0);
-   System.out.println("Verdier: " + average.values);
-   System.out.println("Gjennomsnitt: " + average.getMean());
-   System.out.println("Middelverdi: " + average.getMedian());
-}
+include::Average2.java[tag=main-method]
 ----
 
 [plantuml]

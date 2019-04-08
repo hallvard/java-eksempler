@@ -43,10 +43,11 @@ Vi må legge til en `start`-variabel, siden vi jo må huske den opprinnelige `st
 
 [source, java]
 ----
-int start; // ny
-int end; // som før
-int counter; // som før
+include::Counter2.java[tag=variables]
 ----
+
+<1> ny
+<2> som før
 
 ==== Konstruktør(er) og metoder
 
@@ -54,18 +55,11 @@ Konstruktøren må endres og metoden for å restarte legges til:
 
 [source, java]
 ----
-// noe endret
-Counter2(int start, int end) {
-   this.start = start;
-   this.end = end;
-   restart();
-}
-
-// ny
-void restart() {
-   counter = start;
-}
+include::Counter2.java[tags=constructor;restart-method]
 ----
+
+<1> noe endret
+<2> ny
 
 Her har vi valgt å kalle `restart`-metoden i konstruktøren, siden det som gjenstår etter initialisering av `start`- og `end`-variablene nødvendigvis tilsvarer å (re)starte telleren.
 
@@ -88,21 +82,9 @@ En mulig `main`-metode for å teste `Counter2`-klassen er vist under.
 
 [source, java]
 ----
-public static void main(String[] args) {
-   Counter2 counter = new Counter2(2, 3); // <1>
-   System.out.println("Counter is: " + counter.getCounter()); // <2>
-   System.out.println("isFinished? " + counter.isFinished()); // <2>
-   counter.count(); // <3>
-   System.out.println("Counter is: " + counter.getCounter()); // <2>
-   System.out.println("isFinished? " + counter.isFinished()); // <2>
-   counter.restart(); // <3>
-   System.out.println("Counter is: " + counter.getCounter()); // <2>
-   System.out.println("isFinished? " + counter.isFinished()); // <2>
-   counter.count(); // <3>
-   System.out.println("Counter is: " + counter.getCounter()); // <2>
-   System.out.println("isFinished? " + counter.isFinished()); // <2>
-}
+include::Counter2.java[tag=main-method]
 ----
+
 <1> Testobjekt opprettes.
 <2> Tilstand hentes ut med lesemetode og skrives ut.
 <3> Endringsmetode kalles og tilstand endres (potensielt).

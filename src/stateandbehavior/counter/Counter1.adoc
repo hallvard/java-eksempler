@@ -78,8 +78,7 @@ både _teller_- og _slutt_-verdien, så trenger vi følgende variabeldeklarasjon
 
 [source, java]
 ----
-int counter;
-int end;
+include::Counter1.java[tag=variables]
 ----
 
 `int` angir at variablene vil ha verdier som er _heltall_. I motsetning til språk som Python og Javascript
@@ -95,10 +94,7 @@ Siden vi krever at en må oppgi start- og sluttverdi for telleren på forhånd, 
 
 [source, java]
 ----
-Counter1(int start, int end) { <1>
-   this.counter = start; // <2>
-   this.end = end;
-}
+include::Counter1.java[tag=constructor]
 ----
 
 <1> En konstruktør må ha samme navn som klassen, og parametrene tilsvarer det som må oppgis når en lager et nytt object med `new`, f.eks. `new Counter1(2, 5)`.
@@ -136,9 +132,7 @@ Etter konstruktøren er det vanlig å ha metoder for å hente ut/spørre om obje
 
 [source, java]
 ----
-int getCounter() { // <1>
-   return counter; // <2>
-}
+include::Counter1.java[tag=getCounter-method]
 ----
 
 <1> Typen til returverdien angis (som for variabler) foran navnet, og så kommer parameterlista inni parenteser.
@@ -153,9 +147,7 @@ Metoden for å sjekke om telleren har nådd (eller passert) sluttverdien, kan sk
 
 [source, java]
 ----
-boolean isFinished() { // <1>
-   return counter >= end;
-}
+include::Counter1.java[tag=isFinished-method]
 ----
 
 <1> `boolean` angir som over, typen til returverdien, som her er en _logisk_ verdi, altså enten `true` eller `false`.
@@ -180,11 +172,7 @@ Den siste metoden har som oppgave å øke telleren med 1, dersom tellingen ikke 
 
 [source, java]
 ----
-void count() { // <1>
-   if (! isFinished()) { // <2>
-      counter = counter + 1; // <3>
-   }
-}
+include::Counter1.java[tag=count-method]
 ----
 
 <1> Her angir `void` at metoden _ikke_ returnerer noen verdi (void = tomrom, altså manglende verdi), og derfor kan vi utelate `return`-setningen.
@@ -222,17 +210,11 @@ For å teste at logikken til koden vår er slik vi ønsker, lager vi et `Counter
 
 [source, java]
 ----
-public static void main(String[] args) {
-   Counter1 counter = new Counter1(2, 3); // <1>
-   System.out.println("Counter is: " + counter.getCounter()); // <2>
-   System.out.println("isFinished? " + counter.isFinished()); // <2>
-   counter.count(); // <3>
-   System.out.println("Counter is: " + counter.getCounter()); // <2>
-   System.out.println("isFinished? " + counter.isFinished()); // <2>
-}
+include::Counter1.java[tag=main-method]
 ----
 <1> Opprettelse av objektet som skal testes
 <2> Utskrift av tilstanden til objektet. Det som skrives ut må (manuelt) sammenlignes med det som er forventet.
+<3> Endring av tilstanden.
 
 Du kan selv tenke deg til hva som er forventet utskrift og så sjekke at så er tilfellet ved å kjøre koden!
 I Eclipse gjøres det ved å høyre-klikke i fila og velge Run As > Java Application. Dersom Java Application ikke dukker opp som valg i undermenyen,

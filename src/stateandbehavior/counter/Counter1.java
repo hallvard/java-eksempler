@@ -4,47 +4,50 @@ public class Counter1 {
 
 	// først kommer variabel-deklarasjoner
 
+	// tag::variables[]
 	int counter;
 	int end;
+	// end::variables[]
 	
 	// så konstruktører
 
-	Counter1(int start, int end) {
-		this.counter = start;
+	// tag::constructor[]
+	Counter1(int start, int end) { // <1>
+		this.counter = start; // <2>
 		this.end = end;
 	}
+	// end::constructor[]
 
 	// deretter metoder
 
-	int getCounter() {
-		return counter;
+	// tag::getCounter-method[]
+	int getCounter() { // <1>
+		return counter; // <2>
 	}
+	// end::getCounter-method[]
 	
-	boolean isFinished() {
-		return counter >= end;
+	// tag::isFinished-method[]
+	boolean isFinished() { // <1>
+		return counter >= end; // <2>
 	}
+	// end::isFinished-method[]
 	
-	void count() {
-		if (! isFinished()) {
-			counter = counter + 1; // alternatively: counter += 1 or counter++
+	// tag::count-method[]
+	void count() { // <1>
+		if (! isFinished()) { // <3>
+			counter = counter + 1; // <3>
 		}
 	}
+	// end::count-method[]
 	
+	// tag::main-method[]
 	public static void main(String[] args) {
-		Counter1 counter = new Counter1(2, 5);
-		System.out.println("Counter is: " + counter.getCounter());
-		System.out.println("isFinished? " + counter.isFinished());
-		counter.count();
-		System.out.println("Counter is: " + counter.getCounter());
-		System.out.println("isFinished? " + counter.isFinished());
-		counter.count();
-		System.out.println("Counter is: " + counter.getCounter());
-		System.out.println("isFinished? " + counter.isFinished());
-		counter.count();
-		System.out.println("Counter is: " + counter.getCounter());
-		System.out.println("isFinished? " + counter.isFinished());
-		counter.count();
-		System.out.println("Counter is: " + counter.getCounter());
-		System.out.println("isFinished? " + counter.isFinished());
+		Counter1 counter = new Counter1(2, 3); // <1>
+		System.out.println("Counter is: " + counter.getCounter()); // <2>
+		System.out.println("isFinished? " + counter.isFinished()); // <2>
+		counter.count(); // <3>
+		System.out.println("Counter is: " + counter.getCounter()); // <2>
+		System.out.println("isFinished? " + counter.isFinished()); // <2>
 	}
+	// end::main-method[]
 }
