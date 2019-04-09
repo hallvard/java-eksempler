@@ -73,14 +73,7 @@ Samme instans kan brukes til både åpning og lagring, og følgende kode håndte
 
 [source, java]
 ----
-private FileChooser fileChooser;
-
-private FileChooser getFileChooser() {
-   if (fileChooser == null) {
-      fileChooser = new FileChooser();
-   }
-   return fileChooser;
-}
+include::ChessController.java[tag=fileChooser, indent=0]
 ----
 
 Her er poenget at vi utsetter å lage instansen til den faktisk trengs, og når vi koder `getFileChooser` som over og bruker den i alle andre metoder som trenger en fildialog,

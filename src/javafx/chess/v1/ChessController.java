@@ -9,9 +9,10 @@ import javafx.scene.control.TextField;
 
 public class ChessController {
 
-	List<Piece> allPieces = new ArrayList<>();
+	// tag::object-initialization[]
+	List<Piece> allPieces = new ArrayList<>(); // <1>
 
-	List<String> startPieces = List.of(
+	List<String> startPieces = List.of( // <2>
 			"Ra8♜", "Nb8♞", "Bc8♝", "Qd8♛", "Ke8♚", "Bf8♝", "Ng8♞", "Rh8♜",
 			"Pa7♟", "Pb7♟", "Pc7♟", "Pd7♟", "Pe7♟", "Pf7♟", "Pg7♟", "Ph7♟",
 			"Pa2♙", "Pb2♙", "Pc2♙", "Pd2♙", "Pe2♙", "Pf2♙", "Pg2♙", "Ph2♙",
@@ -19,18 +20,18 @@ public class ChessController {
 	);
 
 	public ChessController() {
-		for (var s : startPieces) {
+		for (var s : startPieces) { // <3>
 			var pieceKind = s.charAt(0);
 			var x = s.charAt(1);
 			var y = s.charAt(2) - '0';
 			var symbol = s.charAt(3);
 			var piece = new Piece(pieceKind, x, y, symbol);
 			allPieces.add(piece);
-			// koden over tilsvarer følgende én-linjer:
-			// allPieces.add(new Piece(s.charAt(0), s.charAt(1), s.charAt(2) - '0', s.charAt(3)))
 		}
 	}
+	// end::object-initialization[]
 	
+	// tag::label-variables[]
 	@FXML Label a1, a2, a3, a4, a5, a6, a7, a8;
 	@FXML Label b1, b2, b3, b4, b5, b6, b7, b8;
 	@FXML Label c1, c2, c3, c4, c5, c6, c7, c8;
@@ -41,7 +42,9 @@ public class ChessController {
 	@FXML Label h1, h2, h3, h4, h5, h6, h7, h8;
 	
 	List<Label> allLabels;
+	// end::label-variables[]
 	
+	// tag::fxml-initialization[]
 	@FXML
 	void initialize() {
 		allLabels = List.of(
@@ -66,10 +69,14 @@ public class ChessController {
 			label.setText(String.valueOf(piece.symbol));
 		}
 	}
+	// end::fxml-initialization[]
 
+	// tag::textfield-variables[]
 	@FXML TextField from;
 	@FXML TextField to;
+	// end::textfield-variables[]
 	
+	// tag::handleMove-methods[]
 	@FXML
 	void handleMove() {
 		var from = this.from.getText();
@@ -101,4 +108,5 @@ public class ChessController {
 		}
 		return null;
 	}
+	// end::handleMove-methods[]
 }

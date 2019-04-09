@@ -6,12 +6,14 @@ og gi tilbakemelding til brukeren om hva som evt. gjorde et trekk ulovlig.
 === Meldingsfeltet for tilbakemelding
 
 Siden vi skal gi tilbakemelding til brukeren om ugyldige/ulovlige flytt, så trenger vi et meldingsfelt (en `Label`) i FXML-fila.
-Dette legges bak flytt-knappen og gis et unikt `fx:id`-attributt, og en tilsvarende variabel deklareres i kontroller-klassen:
+Dette legges bak flytt-knappen og gis et unikt `fx:id`-attributt:
 
 [source, xml]
 ----
    <Label fx:id="message" ... />
 ----
+
+En tilsvarende variabel må deklareres i kontroller-klassen:
 
 [source, java]
 ----

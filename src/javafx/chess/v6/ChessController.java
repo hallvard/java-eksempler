@@ -238,6 +238,7 @@ public class ChessController {
 		updateAll();
 	}
 	
+	// tag::fileChooser[]
 	private FileChooser fileChooser;
 
 	private FileChooser getFileChooser() {
@@ -246,6 +247,7 @@ public class ChessController {
 		}
 		return fileChooser;
 	}
+	// end::fileChooser[]
 
 	@FXML void handleOpen() {
 		FileChooser fileChooser = getFileChooser();
