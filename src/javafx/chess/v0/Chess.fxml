@@ -480,6 +480,7 @@
          </children>
       </Pane>
    </center>
+   <!-- tag::top-pane[] -->
    <top>
       <Pane prefHeight="54.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
@@ -491,4 +492,5 @@
          </children>
       </Pane>
    </top>
+   <!-- end::top-pane[] -->
 </BorderPane>

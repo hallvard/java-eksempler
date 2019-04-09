@@ -1,4 +1,4 @@
-# Versjon 6 av sjakk med JavaFX og FXML
+== Versjon 6 av sjakk med JavaFX og FXML
 
 Denne versjonen gjør app-en _dokument-sentrisk_ med støtte for å lagre og lese inn spill, basert på et filformat for sjakkspill.
 Filformatet bruker https://en.wikipedia.org/wiki/Algebraic_notation_%28chess%29[den offisielle notasjonen for flytt].

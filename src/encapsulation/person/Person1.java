@@ -58,8 +58,6 @@ public class Person1 {
 			fn = "?";
 		};
 		return gn + " " + fn;
-	   // kompakt variant:
-	   // return (givenName != null ? givenName : "?") + " " + (familyName != null ? familyName : "?") 
 	}
 
 	public void setFullName(String fullName) {

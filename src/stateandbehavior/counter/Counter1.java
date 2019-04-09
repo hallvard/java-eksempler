@@ -34,7 +34,7 @@ public class Counter1 {
 	
 	// tag::count-method[]
 	void count() { // <1>
-		if (! isFinished()) { // <3>
+		if (! isFinished()) { // <2>
 			counter = counter + 1; // <3>
 		}
 	}

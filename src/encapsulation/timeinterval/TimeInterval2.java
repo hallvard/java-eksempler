@@ -89,7 +89,7 @@ public class TimeInterval2 {
 	}
 	// end::end-methods[]
 
-	// start::interval-methods[]
+	// tag::interval-methods[]
 	public int getIntervalLength() {
 		return intervalLength;
 	}

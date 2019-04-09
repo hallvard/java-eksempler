@@ -209,7 +209,7 @@ så kan en legge til metoder som `setToPreviousDay` og `setToNextDay`:
 
 [source, java]
 ----
-include::Date.java[tag=getters]
+include::Date.java[tag=setTo-methods]
 ----
 
 <1> Sjekker om en også må justere måneden.

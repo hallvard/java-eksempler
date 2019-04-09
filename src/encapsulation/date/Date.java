@@ -80,7 +80,7 @@ public class Date {
 	
 	// bekvemmelighetsmetoder
 	
-	// tag::convenience-methods[]
+	// tag::setTo-methods[]
 	public void setToPreviousDay() {
 		day = day - 1;
 		if (day < 1) { // <1>
@@ -104,10 +104,5 @@ public class Date {
 			day = 1;
 		}		
 	}
-	// end::convenience-methods[]
-
-	//
-	
-	public static void main(String[] args) {
-	}
+	// end::setTo-methods[]
 }
