@@ -6,8 +6,8 @@ f.eks. stateandbehavior og encapsulation, for å gjøre det lettere å se når d
 
 ## Tilstand og oppførsel (stateandbehavior)
 
-- [counter](src/stateandbehavior/counter/) - håndtering av en enkel teller. Eksemplet er i to trinn, [Counter1](src/stateandbehavior/counter/Counter1.md) og [Counter2](src/stateandbehavior/counter/Counter2.md).
-- [average](src/stateandbehavior/average) - et objekt som støtter beregning av gjennomsnitt. Eksemplet er i to trinn, [Average1](src/stateandbehavior/average/Average1.adoc) og [Average2](src/stateandbehavior/average/Average2.adoc).
+- [counter](src/stateandbehavior/counter/README.adoc) - håndtering av en enkel teller. Eksemplet er i to trinn, [Counter1](src/stateandbehavior/counter/Counter1.adoc) og [Counter2](src/stateandbehavior/counter/Counter2.adoc).
+- [average](src/stateandbehavior/average/README.adoc) - et objekt som støtter beregning av gjennomsnitt. Eksemplet er i to trinn, [Average1](src/stateandbehavior/average/Average1.adoc) og [Average2](src/stateandbehavior/average/Average2.adoc).
 
 ## Innkapsling (encapsulation)
 
