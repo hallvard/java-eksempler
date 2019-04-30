@@ -1,2 +1,5 @@
 image:
   file: .gitpod.dockerfile
+
+tasks:
+  - init: sdk use java 11.0.2-open
