@@ -24,7 +24,6 @@
 	</properties>
 
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -45,35 +44,37 @@
 					    <version>1.5.16</version>
 					</dependency>
 		        </dependencies>
-		        <configuration>
-		        	<!-- root directory -->
-		        	<sourceDirectory>src</sourceDirectory>
-		        	<preserveDirectories>true</preserveDirectories>
-		        	<backend>html</backend>
-		        	<sourceHighlighter>highlight.js</sourceHighlighter>
-		        	<!-- directory relative to adoc file, we want images side-by-side adoc files -->
-		        	<imagesDir>.</imagesDir>
-		        	<!-- ensures relative includes are relative to including file -->
-		        	<relativeBaseDir>true</relativeBaseDir>
-		        	<!-- what to copy to target -->
-		        	<resources>
-					    <resource>
-					    	<directory>src</directory>
-					        <includes>
-					            <include>**/*.png</include>
-					        </includes>
-					    </resource>
-					</resources>
-		            <requires>
-		                <require>asciidoctor-diagram</require>
-		            </requires>
-		        </configuration>
+                <configuration>
+                    <!-- root directory -->
+                    <sourceDirectory>src/main</sourceDirectory>
+                    <preserveDirectories>true</preserveDirectories>
+                    <backend>html</backend>
+                    <sourceHighlighter>highlight.js</sourceHighlighter>
+                    <!-- directory relative to adoc file, we want images side-by-side adoc files -->
+                    <imagesDir>.</imagesDir>
+                    <!-- ensures relative includes are relative to including file -->
+                    <relativeBaseDir>true</relativeBaseDir>
+                    <!-- what to copy to target -->
+                    <resources>
+                        <resource>
+                            <directory>src/main</directory>
+                            <includes>
+                                <include>**/*.png</include>
+                            </includes>
+                        </resource>
+                    </resources>
+                    <requires>
+                        <require>asciidoctor-diagram</require>
+                    </requires>
+                </configuration>
 		        <executions>
 			        <execution>
-			            <id>process-asciidoc</id>              
-			            <phase>generate-resources</phase> 
+			            <id>process-asciidoc</id>
+                        <!--
+			            <phase>generate-resources</phase>
+                        -->
 			            <goals>
-			                <goal>process-asciidoc</goal> 
+			                <goal>process-asciidoc</goal>
 			            </goals>
 			        </execution>
 			    </executions>
