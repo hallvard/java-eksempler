@@ -1,5 +1,5 @@
 = Objektorientert programmering
-:toc:
+:toc: left
 
 == Forord
 
@@ -97,3 +97,5 @@ Hvert måltid har sine retter, som bestemmer hvilke kokker som utgjør laget, og
 Kanskje er én oppskrift for en rett så komplisert at to kokker må samarbeide. Kokkene må uansett jobbe koordinert,
 slik at hver rett blir klar til riktig tid. De deler dessuten kjøkkenressursene, så de må sørge for å bytte på å bruke
 kopper og kar, kniver og andre redskaper, kokeplater og ovn, osv.
+
+include::eksempler.adoc[]

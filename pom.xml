@@ -47,7 +47,6 @@
                 <configuration>
                     <!-- root directory -->
                     <sourceDirectory>src/main</sourceDirectory>
-                    <sourceDirectory>src/output</sourceDirectory>
                     <preserveDirectories>true</preserveDirectories>
                     <backend>html</backend>
                     <sourceHighlighter>highlight.js</sourceHighlighter>

@@ -6,11 +6,11 @@ Underveis skjer det en del endringer som er typiske for hvordan et kodingsprosje
 
 Versjonene har hver sin Chess.adoc-fil som beskriver hva som er nytt i den versjonen ift. forrige. Her er det kort oppsummert:
 
-- <<v0/Chess.adoc#, v0>>: Statisk skjermbilde med sjakkbrett og innfyllingsfelt for flytt, og app-klasse.
-- <<v1/Chess.adoc#, v1>>: Brikke- og kontroller-klasser, med logikk for å plassere brikkene i startposisjonen og vise dem frem vha. unicode-tegn for brikkene.
-- <<v2/Chess.adoc#, v2>>: Sjekk for lovlige flytt iht. hvilken brikke som flyttes, og evt. gi tilbakemelding.
-- <<v3/Chess.adoc#, v3>>: Generell opprydning og innkapsling iht. prinsippet om fordeling av logikk mellom domeneklasser og GUI.
-- <<v4/Chess.adoc#, v4>>: Bruk av musklikk på brikker og ruter for å flytte.
-- <<v5/Chess.adoc#, v5>>: Undo og redo
-- <<v6/Chess.adoc#, v6>>: Filformat for lagring av spill, og bedre feedback ved valg av brikker.
-- <<v7/Chess.adoc#, v7>>: Innfører egne klasser for hver brikketype, med tilsvarende brikkelogikk. 
+- <<v0/README.adoc#, v0>>: Statisk skjermbilde med sjakkbrett og innfyllingsfelt for flytt, og app-klasse.
+- <<v1/README.adoc#, v1>>: Brikke- og kontroller-klasser, med logikk for å plassere brikkene i startposisjonen og vise dem frem vha. unicode-tegn for brikkene.
+- <<v2/README.adoc#, v2>>: Sjekk for lovlige flytt iht. hvilken brikke som flyttes, og evt. gi tilbakemelding.
+- <<v3/README.adoc#, v3>>: Generell opprydning og innkapsling iht. prinsippet om fordeling av logikk mellom domeneklasser og GUI.
+- <<v4/README.adoc#, v4>>: Bruk av musklikk på brikker og ruter for å flytte.
+- <<v5/README.adoc#, v5>>: Undo og redo
+- <<v6/README.adoc#, v6>>: Filformat for lagring av spill, og bedre feedback ved valg av brikker.
+- <<v7/README.adoc#, v7>>: Innfører egne klasser for hver brikketype, med tilsvarende brikkelogikk. 

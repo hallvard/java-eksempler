@@ -1,0 +1,30 @@
+== Kode-eksempler
+
+Her er en oversikt over alle kode-eksemplene. Eksemplene følger samme klassifisering og pakkestruktur som øvingene,
+f.eks. stateandbehavior og encapsulation, for å gjøre det lettere å se når de er relevante å bruke.
+
+=== Tilstand og oppførsel (stateandbehavior)
+
+- <<../java/stateandbehavior/counter/README.adoc#, counter>> - håndtering av en enkel teller. Eksemplet er i to trinn, <<../java/stateandbehavior/counter/Counter1.adoc#, Counter1>> og <<../java/stateandbehavior/counter/Counter2.adoc#, Counter2>>.
+- <<../java/stateandbehavior/average/README.adoc#, average>> - et objekt som støtter beregning av gjennomsnitt. Eksemplet er i to trinn, <<../java/stateandbehavior/average/Average1.adoc, Average1>> og <<../java/stateandbehavior/average/Average2.adoc#, Average2>>.
+
+=== Innkapsling (encapsulation)
+
+- <<../java/encapsulation/date/README.adoc#, Date>> - klasse for representasjon av dato.
+- <<../java/encapsulation/person/README.adoc#, Person>> - klasse for representasjon av person-navn.
+- <<../java/encapsulation/timeinterval/README.adoc#, TimeInterval>> - klasse for representasjon av tidsintervall.
+
+=== Objektstrukturer (objectstructures)
+
+- <<../java/objectstructures/timeinterval/README.adoc#, TimeInterval>> - klasse for representasjon av tidsintervall, ved bruk av hjelpeklasse for tidspunkt.
+
+=== Standardteknikker (patterns)
+
+=== Delegering (delegation)
+
+=== Observert-observatør (observable)
+
+=== JavaFX
+
+- <<../java/javafx/helloworld/README.adoc#, HelloWorld>> - minimalistisk eksempel på app med knapp som endrer tekst når den trykkes på
+- <<../java/javafx/chess/README.adoc#, Chess>> - en sjakk-app, som utvikles i en rekke trinn
