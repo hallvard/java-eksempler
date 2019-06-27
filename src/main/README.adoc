@@ -1,0 +1,6 @@
+== Repo-oversikt
+
+Dette repoet inneholdet følgende elementer
+
+- <<asciidoc/README.adoc#, "Lærebok" i objektorientering>>
+- <<java/README.adoc#, Kode-eksempler>>
