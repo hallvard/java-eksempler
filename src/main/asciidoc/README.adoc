@@ -34,7 +34,7 @@ men med en god konseptuell forståelse av teknikkene og gode verktøy så blir p
 === Objekter
 Et objektorientert (kjørende) program består av en masse objekter som er koblet sammen. Inni hvert objekt er det data og kode,
 koden er til for å administrere og operere på dataene iht. regler for hvordan dataene henger sammen. Hvert objekt
-er en del operasjoner en kan be dem utføre, f.eks. hente ut dataene inni eller endre på dem (iht. de innebygde reglene).
+har en del operasjoner en kan be dem utføre, f.eks. hente ut dataene inni eller endre på dem (iht. de innebygde reglene).
 
 Et av de enkleste objektene en kan tenke seg, holder orden på en teller-verdi. Teller-objektet har to operasjoner,
 én for å lese ut teller-verdien og én for å øke telleren med én. Figuren under viser et slikt teller-objekt,
@@ -65,7 +65,7 @@ fordi vi har bedt det utføre operasjonen *tell-opp-ett-hakk*.
 
 Objekter som er koblet sammen, kan samhandle for å kunne utføre mer komplekse operasjoner enn hvert enkelt objekt
 kan alene. En kan tenke på det som en "chat" mellom objektene, hvor de ber hverandre om å utføre ulike operasjoner, på en koordinert måte.
-Objekter kan ha samhandle på ulike måter, ofte snakker en om at de spiller ulike _roller_ i en samhandlingen.
+Objekter kan samhandle på ulike måter, ofte snakker en om at de spiller ulike _roller_ i en samhandlingen.
 Noen ganger er et objekt administrert av og underordnet et annet og fungerer som hjelpeobjekt, mens andre ganger er forholdet mer balansert.
 Det er slik man klarer å holde kompleksiteten nede, for å unngå for komplekse enkeltobjekter, så deler
 man dem opp i en struktur av samhandlende objekter i stedet. Men hva som er en ryddig og "naturlig" oppdeling er ikke opplagt eller entydig.
@@ -94,6 +94,6 @@ gjør sin del av jobben riktig, og oppgavene utføres i rett sekvens, så blir s
 
 En annen analogi er et lag av kokker, med hver sin spesialitet, som samarbeidet om å lage et måltid.
 Hvert måltid har sine retter, som bestemmer hvilke kokker som utgjør laget, og hver kokk følger sin oppskrift.
-Kanskje er én oppskrift for en rett komplisert nok til at to kokker må samarbeide. Kokkene må uansett jobbe koordinert,
+Kanskje er én oppskrift for en rett så komplisert at to kokker må samarbeide. Kokkene må uansett jobbe koordinert,
 slik at hver rett blir klar til riktig tid. De deler dessuten kjøkkenressursene, så de må sørge for å bytte på å bruke
 kopper og kar, kniver og andre redskaper, kokeplater og ovn, osv.

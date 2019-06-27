@@ -99,7 +99,7 @@ include::Counter1.java[tag=constructor]
 
 <1> En konstruktør må ha samme navn som klassen, og parametrene tilsvarer det som må oppgis når en lager et nytt object med `new`, f.eks. `new Counter1(2, 5)`.
 Vi ser at også parametre trenger en eksplisitt type, som naturlig nok er `int` (heltall) de også, siden de brukes til å sette tilsvarende variabel.
-<2> `this.counter` betyr `counter`-variablen i _dette_ objektet og brukes for å gjøre si at vi setter en variabel i objektet og ikke en lokal variabel i metoden.
+<2> `this.counter` betyr `counter`-variablen i _dette_ objektet og brukes for å si at vi setter en variabel i objektet og ikke en lokal variabel i metoden.
 I den første linja kunne `this.` vært utelatt, fordi det ikke finnes noen lokal `counter`-variabel, men i neste linje, altså `this.end = end` er det vesentlig å ha `this.`
 for å kunne skille mellom variablen i objektet og den lokale variablen (parameteret) i metoden.
 
@@ -182,7 +182,7 @@ Denne testen er nødvendig for det er jo bare om tellingen ikke er ferdig at tel
  
 === Konvensjoner for skriving av navn
 
-Java har strenge konvensjoner for skriving av navn, som en bør følge, for å unngå å forvirre andre programmerere som leser koden:
+Java har strenge konvensjoner for skriving av navn, som en bør følge for å unngå å forvirre andre programmerere som leser koden:
 
 - Pakkenavn begynner med liten forbokstav, og består ofte kun av små bokstaver.
 - Klassenavn begynner med stor forbokstav.
