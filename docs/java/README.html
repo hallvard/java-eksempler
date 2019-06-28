@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.2">
-<title>Objektorientert programmering</title>
+<title>Kode-eksempler</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,141 +435,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>Objektorientert programmering</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_forord">Forord</a></li>
-<li><a href="#_introduksjon">Introduksjon</a>
-<ul class="sectlevel2">
-<li><a href="#_objekter">Objekter</a></li>
-</ul>
-</li>
-<li><a href="#_kode_eksempler">Kode-eksempler</a>
-<ul class="sectlevel2">
-<li><a href="#_tilstand_og_oppførsel_stateandbehavior">Tilstand og oppførsel (stateandbehavior)</a></li>
-<li><a href="#_innkapsling_encapsulation">Innkapsling (encapsulation)</a></li>
-<li><a href="#_objektstrukturer_objectstructures">Objektstrukturer (objectstructures)</a></li>
-<li><a href="#_standardteknikker_patterns">Standardteknikker (patterns)</a></li>
-<li><a href="#_delegering_delegation">Delegering (delegation)</a></li>
-<li><a href="#_observert_observatør_observable">Observert-observatør (observable)</a></li>
-<li><a href="#_javafx">JavaFX</a></li>
-</ul>
-</li>
-</ul>
-</div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_forord">Forord</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Dette er en slags lærebok i objektorientert programmering mm. i Java, som prøver å kombinere innhold på en ny måte:
-- den forklarer grunnleggende begreper og teknikker innen objektorientert programmering
-- forklarer bruk av Java-biblioteker og -rammeverk
-- inkluderer forklarte og forklarende kode-eksempler
-Målet er at kombinasjonen både gir en konseptuell forståelse og hjelper til å utvikle praksiske ferdigheter.</p>
-</div>
-<div class="paragraph">
-<p>En kan tenke på det som en videreføring av <a href="https://www.ntnu.no/wiki/display/tdt4100/Faginnhold">fagwikien til TDT4100</a>, men
-på en form som gjør den litt mer lærebokaktig, enn løse sider om et avgrenset sett med temaer.
-Ved å bruke <a href="https://asciidoctor.org/">asciidoctor</a> blir det både enklere å integrere ulike typer materiale og generere ulike typer formater.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_introduksjon">Introduksjon</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Objektorientering handler ikke om finurlig logikk, smarte triks eller komplekse algoritmer, men om måter å organisere
-kode på, som har vist seg å fungere godt i både liten og stor skala, for å håndtere kompleksiteten som oppstår når
-programmer utvikles over tid.</p>
-</div>
-<div class="paragraph">
-<p>Det er lurt å lære seg objektorientert programmering av flere grunner:
-- Mange av kodebibliotekene og -rammeverkene en bruker er basert på objektorienterte teknikker,
-så for å utnytte dem, trengs forståelse av objektorientering.
-- Etterhvert som en lager større programmer selv, vil objektorienterte teknikker hjelpe en å holde dem ryddige og kompleksiteten nede.
-- Når flere samarbeider om et program, så hjelper objektorientering en til å dele det opp slik at sambeidet blir enklere.
-- Ønskede egenskaper som konfigurerbarhet og utvidbarhet bygger gjerne på god bruk av objektorientering.</p>
-</div>
-<div class="paragraph">
-<p>Bruk av objektorienterte teknikker kan virke unødig kompliserende, spesielt i læringssammenheng,
-hvor de introduseres før programmer er så store at det egentlig trengs. Spesielt oppdelingen i mange små programfiler,
-i stedet for å samle koden i få, kan være forvirrende,
-men med en god konseptuell forståelse av teknikkene og gode verktøy så blir problemet mindre.</p>
-</div>
-<div class="sect2">
-<h3 id="_objekter">Objekter</h3>
-<div class="paragraph">
-<p>Et objektorientert (kjørende) program består av en masse objekter som er koblet sammen. Inni hvert objekt er det data og kode,
-koden er til for å administrere og operere på dataene iht. regler for hvordan dataene henger sammen. Hvert objekt
-har en del operasjoner en kan be dem utføre, f.eks. hente ut dataene inni eller endre på dem (iht. de innebygde reglene).</p>
-</div>
-<div class="paragraph">
-<p>Et av de enkleste objektene en kan tenke seg, holder orden på en teller-verdi. Teller-objektet har to operasjoner,
-én for å lese ut teller-verdien og én for å øke telleren med én. Figuren under viser et slikt teller-objekt,
-etter at telleren har kommet til 7 (hva den begynte på er ikke gitt, heller ikke om den noen gang vil stoppe).</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./diag-28d5462ed1c4d279a1d8b5f64f03e4d6.png" alt="diag 28d5462ed1c4d279a1d8b5f64f03e4d6" width="87" height="55">
-</div>
-</div>
-<div class="paragraph">
-<p>Hvis en ber telleren om å telle opp ett hakk, så blir teller-verdien 8. Dette kan illustreres slik:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./diag-03b5d9189335a3c1f622d62b43f7fcfb.png" alt="diag 03b5d9189335a3c1f622d62b43f7fcfb" width="169" height="171">
-</div>
-</div>
-<div class="paragraph">
-<p>"#1" er "identiteten" (id-en) til objektet, her har begge objektene samme id for å illustrere at det er samme objekt
-i to forskjellige <em>tilstander</em>. Objektet har gått fra den ene til den andre tilstanden, en såkalt <em>transisjon</em>, her illustrert med en stiplet pil,
-fordi vi har bedt det utføre operasjonen <strong>tell-opp-ett-hakk</strong>.</p>
-</div>
-<div class="paragraph">
-<p>Objekter som er koblet sammen, kan samhandle for å kunne utføre mer komplekse operasjoner enn hvert enkelt objekt
-kan alene. En kan tenke på det som en "chat" mellom objektene, hvor de ber hverandre om å utføre ulike operasjoner, på en koordinert måte.
-Objekter kan samhandle på ulike måter, ofte snakker en om at de spiller ulike <em>roller</em> i en samhandlingen.
-Noen ganger er et objekt administrert av og underordnet et annet og fungerer som hjelpeobjekt, mens andre ganger er forholdet mer balansert.
-Det er slik man klarer å holde kompleksiteten nede, for å unngå for komplekse enkeltobjekter, så deler
-man dem opp i en struktur av samhandlende objekter i stedet. Men hva som er en ryddig og "naturlig" oppdeling er ikke opplagt eller entydig.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./diag-5692169d8ef7af695e380a9af4edaa34.png" alt="diag 5692169d8ef7af695e380a9af4edaa34" width="357" height="244">
-</div>
-</div>
-<div class="paragraph">
-<p>Figuren over illustrerer hvordan tre objekter samhandler. <strong>klokke</strong> ber <strong>sekund-teller</strong> om å telle opp et hakk. Så spør
-<strong>klokke</strong> <strong>sekund-teller</strong> om hva telleren er, og siden den er kommet til 60 (sekunder) så ber <strong>klokke</strong> den om å nullstille
-telleren, før <strong>minutt-teller</strong> får beskjed om å telle opp ett hakk.</p>
-</div>
-<div class="paragraph">
-<p>Analogier fra den analoge verden kan være til hjelp, faktisk var objektorientert tenkning opprinnelig en måte
-å forstå virkelige fenomer og gjøre dem enklere å representere i en datamaskin. Slik er det fortsatt, men objektorientering har også
-vist seg som en ryddig måte å organisere rene digitale fenomener.</p>
-</div>
-<div class="paragraph">
-<p>En analogi for samhandlende objekter er håndverkere som samarbeider om å bygge et hus. Ulike typer håndverkere gjør ulike
-typer deloppgaver, snekkere snekrer, rørleggere legger rør og elektrikere kobler opp strømnettet. Arbeidslederen
-koordinerer dem, så oppgaver utføres i en naturlig rekkefølge og med nødvendig koordinering. Hvis hver enkelt håndverker
-gjør sin del av jobben riktig, og oppgavene utføres i rett sekvens, så blir sluttresultatet som forventet.</p>
-</div>
-<div class="paragraph">
-<p>En annen analogi er et lag av kokker, med hver sin spesialitet, som samarbeidet om å lage et måltid.
-Hvert måltid har sine retter, som bestemmer hvilke kokker som utgjør laget, og hver kokk følger sin oppskrift.
-Kanskje er én oppskrift for en rett så komplisert at to kokker må samarbeide. Kokkene må uansett jobbe koordinert,
-slik at hver rett blir klar til riktig tid. De deler dessuten kjøkkenressursene, så de må sørge for å bytte på å bruke
-kopper og kar, kniver og andre redskaper, kokeplater og ovn, osv.</p>
-</div>
-</div>
-</div>
-</div>
 <div class="sect1">
 <h2 id="_kode_eksempler">Kode-eksempler</h2>
 <div class="sectionbody">
@@ -646,7 +515,7 @@ f.eks. stateandbehavior og encapsulation, for å gjøre det lettere å se når d
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-06-28 09:51:05 +0200
+Last updated 2019-06-27 20:30:13 +0200
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

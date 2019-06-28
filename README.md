@@ -1,4 +1,4 @@
-# Repo for eksempel-kode
+https://hallvard.github.io/java-eksempler/https://hallvard.github.io/java-eksempler/# Repo for eksempel-kode
 
 Dette kode-lageret er for eksempler til bruk i TDT4100-forelesninger og/eller som
 undervisningsmateriell. Eksemplene følger samme klassifisering og pakkestruktur som øvingene,
