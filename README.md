@@ -1,4 +1,8 @@
-https://hallvard.github.io/java-eksempler/https://hallvard.github.io/java-eksempler/# Repo for eksempel-kode
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/hallvard/java-eksempler/)
+
+https://hallvard.github.io/java-eksempler/
+
+# Repo for eksempel-kode
 
 Dette kode-lageret er for eksempler til bruk i TDT4100-forelesninger og/eller som
 undervisningsmateriell. Eksemplene følger samme klassifisering og pakkestruktur som øvingene,
